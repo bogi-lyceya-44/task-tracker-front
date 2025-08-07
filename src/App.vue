@@ -1,17 +1,20 @@
 <script lang="ts">
 import {defineComponent} from 'vue';
-import Test from './components/Test.vue';
+import Navbar from './components/Navbar.vue';
+import BoardsList from "./components/BoardsList.vue";
 
 export default defineComponent({
   name: 'App',
   components: {
-    Test
+    BoardsList,
+    Navbar
   }
 });
 </script>
 
 <template>
-  <Test/>
+  <Navbar/>
+  <BoardsList />
 </template>
 
 <style scoped>
