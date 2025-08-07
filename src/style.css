@@ -1,3 +1,41 @@
+:root {
+  font-size: 16px;
+
+  --text-color: #131313;
+  --text-light-color: #787486;
+  --background-color: #ffffff;
+  --background-focus-color: #F2F2F2;
+  --border-light-color: #DBDBDB;
+  --text-danger-color: #B01212;
+  --background-danger-color: #FFE5E5;
+}
+
 * {
   box-sizing: border-box;
+}
+
+a {
+  text-decoration: none;
+}
+
+body {
+  margin: 0;
+  font-family: 'Avenir', sans-serif;
+  background-color: var(--background-color)
+}
+
+button {
+  font-family: 'Avenir', sans-serif;
+}
+
+@media (max-width: 768px) {
+  :root {
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 480px) {
+  :root {
+    font-size: 12px;
+  }
 }
