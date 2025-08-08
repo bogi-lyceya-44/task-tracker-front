@@ -1,11 +1,11 @@
 <script lang="ts">
-import { defineComponent } from 'vue';
+import { defineComponent } from "vue";
 
 export default defineComponent({
   name: "ProfilePreview",
   data() {
     return {
-      isOpen: false
+      isOpen: false,
     };
   },
   methods: {
@@ -17,56 +17,51 @@ export default defineComponent({
       if (this.isOpen && wrapper && !wrapper.contains(event.target as Node)) {
         this.isOpen = false;
       }
-    }
+    },
   },
   mounted() {
-    document.addEventListener('click', this.handleClickOutside);
+    document.addEventListener("click", this.handleClickOutside);
   },
   beforeUnmount() {
-    document.removeEventListener('click', this.handleClickOutside);
-  }
+    document.removeEventListener("click", this.handleClickOutside);
+  },
 });
 </script>
 
-
 <template>
   <div class="profile-wrapper" ref="wrapper">
-    <button
-        class="profile-preview"
-        @click="openProfilePreview"
-    >
-      <img
-          class="avatar"
-          src="../assets/images/avatar.jpg"
-          alt="avatar"
-      >
+    <button class="profile-preview" @click="openProfilePreview">
+      <img class="avatar" src="../assets/images/avatar.jpg" alt="avatar" />
     </button>
     <div class="menu" :class="{ open: isOpen }">
       <div class="account-info">
         <img
-            class="account-info__avatar"
-            src="../assets/images/avatar.jpg"
-            alt="avatar"
-        >
+          class="account-info__avatar"
+          src="../assets/images/avatar.jpg"
+          alt="avatar"
+        />
         <div class="account-info__content">
-          <span class="account-info__nickname">EmoPrincessShine</span>
+          <span class="account-info__nickname">Emo Princess Shine</span>
           <span class="account-info__email">petr.ahtimirov@gmail.com</span>
         </div>
       </div>
-      <hr class="menu__hr"/>
+      <hr class="menu__hr" />
       <div class="menu__list">
-        <a class="menu__item" href="/">
+        <RouterLink class="menu__item" to="/profile" @click="isOpen = false">
           <span>Profile</span>
-        </a>
-        <button class="menu__item danger">
+        </RouterLink>
+        <button class="menu__item danger" @click="isOpen = false">
           <span>Sign out</span>
-          <img class="menu__item__icon" src="../assets/icons/log_out.svg" alt="Log out">
+          <img
+            class="menu__item__icon"
+            src="../assets/icons/log_out.svg"
+            alt="Log out"
+          />
         </button>
       </div>
     </div>
   </div>
 </template>
-
 
 <style scoped>
 .profile-wrapper {
@@ -74,7 +69,7 @@ export default defineComponent({
 }
 
 .profile-preview {
-  font-family: 'Avenir', sans-serif;
+  font-family: "Avenir", sans-serif;
   font-size: 1em;
   background-color: inherit;
   border-radius: 2em;
@@ -100,10 +95,13 @@ export default defineComponent({
   padding: 0.5em;
   border: 1px solid var(--border-light-color);
   border-radius: 1em;
+  box-shadow: 0 0.4em 1em 0 var(--border-light-color);
   opacity: 0;
   transform: translateY(-0.5em);
   pointer-events: none;
-  transition: opacity 0.3s ease, transform 0.3s ease;
+  transition:
+    opacity 0.3s ease,
+    transform 0.3s ease;
 }
 
 .menu.open {
@@ -134,7 +132,7 @@ export default defineComponent({
 .account-info__nickname {
   max-width: 12em;
   overflow: hidden;
-  text-overflow: ellipsis
+  text-overflow: ellipsis;
 }
 
 .account-info__email {
@@ -166,12 +164,12 @@ export default defineComponent({
   color: var(--text-color);
   font-size: 1em;
   background-color: inherit;
-  font-weight: 500;
+  font-weight: 400;
   border: none;
   padding: 0 0.6em;
   border-radius: 0.6em;
   cursor: pointer;
-  transition: .3s;
+  transition: 0.3s;
 }
 
 .menu__item.danger {

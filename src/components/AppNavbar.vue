@@ -1,17 +1,17 @@
 <script lang="ts">
-import {defineComponent} from 'vue'
-import ProfilePreview from './ProfilePreview.vue'
+import { defineComponent } from "vue";
+import ProfilePreview from "./ProfilePreview.vue";
 
 export default defineComponent({
-  name: "Navbar",
-  components: {ProfilePreview}
-})
+  name: "AppNavbar",
+  components: { ProfilePreview },
+});
 </script>
 
 <template>
   <div class="navbar">
-    <a class="logo" href="/">task tracker</a>
-    <ProfilePreview/>
+    <RouterLink class="logo" to="/"> task tracker </RouterLink>
+    <ProfilePreview />
   </div>
 </template>
 

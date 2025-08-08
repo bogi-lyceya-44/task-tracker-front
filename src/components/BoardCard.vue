@@ -1,18 +1,16 @@
 <script lang="ts">
-import {defineComponent} from 'vue'
+import { defineComponent } from "vue";
 
 export default defineComponent({
   name: "BoardCard",
-  props: ['name']
-})
+  props: ["name"],
+});
 </script>
 
 <template>
-  <a class="board-link" href="#">
-    <div class="board-card">
-      card
-    </div>
-  </a>
+  <RouterLink class="board-link" to="#">
+    <div class="board-card">card</div>
+  </RouterLink>
 </template>
 
 <style scoped>

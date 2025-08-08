@@ -1,0 +1,11 @@
+<script lang="ts">
+import { defineComponent } from "vue";
+
+export default defineComponent({
+  name: "ProfileView",
+});
+</script>
+
+<template>Profile view</template>
+
+<style scoped></style>

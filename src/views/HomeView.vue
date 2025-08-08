@@ -1,18 +1,15 @@
 <script lang="ts">
 import { defineComponent } from "vue";
-import AppNavbar from "./components/AppNavbar.vue";
+import BoardsList from "../components/BoardsList.vue";
 
 export default defineComponent({
-  name: "App",
-  components: {
-    Navbar: AppNavbar,
-  },
+  name: "HomeView",
+  components: { BoardsList },
 });
 </script>
 
 <template>
-  <Navbar />
-  <RouterView />
+  <BoardsList />
 </template>
 
 <style scoped></style>

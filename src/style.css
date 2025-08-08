@@ -3,11 +3,16 @@
 
   --text-color: #131313;
   --text-light-color: #787486;
+
   --background-color: #ffffff;
-  --background-focus-color: #F2F2F2;
-  --border-light-color: #DBDBDB;
-  --text-danger-color: #B01212;
-  --background-danger-color: #FFE5E5;
+  --background-focus-color: #f2f2f2;
+  --border-light-color: #dbdbdb;
+
+  --text-danger-color: #b01212;
+  --background-danger-color: #ffe5e5;
+
+  --btn-background-color: #131313;
+  --btn-hover-background-color: #383737;
 }
 
 * {
@@ -20,12 +25,32 @@ a {
 
 body {
   margin: 0;
-  font-family: 'Avenir', sans-serif;
-  background-color: var(--background-color)
+  font-family: "Avenir", sans-serif;
+  background-color: var(--background-color);
 }
 
 button {
-  font-family: 'Avenir', sans-serif;
+  font-family: "Avenir", sans-serif;
+}
+
+.btn {
+  height: fit-content;
+  padding: 0.5em 1.2em;
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+  font-size: 1em;
+  font-weight: 400;
+  border: none;
+  color: #fff;
+  background-color: var(--btn-background-color);
+  border-radius: 0.75em;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.btn:hover {
+  background-color: var(--btn-hover-background-color);
 }
 
 @media (max-width: 768px) {
