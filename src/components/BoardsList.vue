@@ -1,5 +1,5 @@
 <script lang="ts">
-import { defineComponent, type ComponentPublicInstance } from "vue";
+import { defineComponent } from "vue";
 import BoardCard from "./BoardCard.vue";
 
 export default defineComponent({
@@ -8,38 +8,31 @@ export default defineComponent({
   data() {
     return {
       boards: [
-        { id: 0, name: "board" },
-        { id: 1, name: "board" },
-        { id: 2, name: "board" },
-        { id: 3, name: "board" },
-        { id: 4, name: "board" },
-        { id: 5, name: "board" },
+        { id: 0, name: "board 1" },
+        { id: 1, name: "board 2" },
+        { id: 2, name: "board 3" },
+        { id: 3, name: "board 4" },
+        { id: 4, name: "board 5" },
+        { id: 5, name: "board 6" },
       ],
-      boardCardRefs: [] as HTMLElement[],
+      draggedIndex: null as number | null,
     };
   },
-  mounted() {
-    this.dragAndDrop();
-  },
   methods: {
-    setBoardCardRef(el: Element | ComponentPublicInstance | null) {
-      const domEl = (el as ComponentPublicInstance)?.$el ?? el;
-
-      if (domEl instanceof HTMLElement && !this.boardCardRefs.includes(domEl)) {
-        this.boardCardRefs.push(domEl);
-      }
+    handleDragStart(index: number) {
+      this.draggedIndex = index;
     },
+    handleDragOver(event: DragEvent) {
+      event.preventDefault();
+    },
+    handleDrop(dropIndex: number) {
+      if (this.draggedIndex === null || this.draggedIndex === dropIndex) return;
 
-    dragAndDrop() {
-      for (const board of this.boardCardRefs) {
-        board.draggable = true;
-        board.addEventListener("dragstart", () => {
-          board.classList.add("dragging");
-        });
-        board.addEventListener("dragend", () => {
-          board.classList.remove("dragging");
-        });
-      }
+      const updated = [...this.boards];
+      const [movedItem] = updated.splice(this.draggedIndex, 1);
+      updated.splice(dropIndex, 0, movedItem);
+      this.boards = updated;
+      this.draggedIndex = null;
     },
   },
 });
@@ -54,14 +47,19 @@ export default defineComponent({
         New board
       </button>
     </div>
-    <div class="boards-list" ref="boardsList">
-      <BoardCard
-        v-for="board in boards"
+    <TransitionGroup name="list" tag="div" class="boards-list">
+      <div
+        class="card"
+        v-for="(board, index) in boards"
         :key="board.id"
-        :name="board.name"
-        :ref="setBoardCardRef"
-      />
-    </div>
+        draggable="true"
+        @dragstart="handleDragStart(index)"
+        @dragover="handleDragOver"
+        @drop="handleDrop(index)"
+      >
+        <BoardCard :name="board.name" />
+      </div>
+    </TransitionGroup>
   </section>
 </template>
 
@@ -89,9 +87,14 @@ export default defineComponent({
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(12em, 1fr));
   gap: 1em;
+  transition: 0.5s;
 }
 
 .button__plus {
   height: 0.9em;
+}
+
+.list-move {
+  transition: all 0.4s;
 }
 </style>
