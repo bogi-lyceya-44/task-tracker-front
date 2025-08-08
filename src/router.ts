@@ -1,14 +1,14 @@
-import { createWebHistory, createRouter } from 'vue-router'
+import { createWebHistory, createRouter } from "vue-router";
 
-import HomeView from './views/HomeView.vue'
-import ProfileView from './views/ProfileView.vue'
+import HomeView from "./views/HomeView.vue";
+import ProfileView from "./views/ProfileView.vue";
 
 const routes = [
-    { path: '/', component: HomeView },
-    { path: '/profile', component: ProfileView },
-]
+  { path: "/", component: HomeView },
+  { path: "/profile", component: ProfileView },
+];
 
 export const router = createRouter({
-    history: createWebHistory(),
-    routes
-})
+  history: createWebHistory(),
+  routes,
+});

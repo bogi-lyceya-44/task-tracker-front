@@ -5,11 +5,11 @@
   --text-light-color: #787486;
 
   --background-color: #ffffff;
-  --background-focus-color: #F2F2F2;
-  --border-light-color: #DBDBDB;
+  --background-focus-color: #f2f2f2;
+  --border-light-color: #dbdbdb;
 
-  --text-danger-color: #B01212;
-  --background-danger-color: #FFE5E5;
+  --text-danger-color: #b01212;
+  --background-danger-color: #ffe5e5;
 
   --btn-background-color: #131313;
   --btn-hover-background-color: #383737;
@@ -25,12 +25,12 @@ a {
 
 body {
   margin: 0;
-  font-family: 'Avenir', sans-serif;
-  background-color: var(--background-color)
+  font-family: "Avenir", sans-serif;
+  background-color: var(--background-color);
 }
 
 button {
-  font-family: 'Avenir', sans-serif;
+  font-family: "Avenir", sans-serif;
 }
 
 .btn {
@@ -46,7 +46,7 @@ button {
   background-color: var(--btn-background-color);
   border-radius: 0.75em;
   cursor: pointer;
-  transition: .3s;
+  transition: 0.3s;
 }
 
 .btn:hover {

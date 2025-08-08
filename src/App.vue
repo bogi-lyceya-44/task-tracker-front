@@ -1,21 +1,18 @@
 <script lang="ts">
-import {defineComponent} from 'vue';
-import Navbar from './components/Navbar.vue';
-import BoardsList from "./components/BoardsList.vue";
+import { defineComponent } from "vue";
+import AppNavbar from "./components/AppNavbar.vue";
 
 export default defineComponent({
-  name: 'App',
+  name: "App",
   components: {
-    BoardsList,
-    Navbar
-  }
+    Navbar: AppNavbar,
+  },
 });
 </script>
 
 <template>
-  <Navbar/>
-  <RouterView/>
+  <Navbar />
+  <RouterView />
 </template>
 
-<style scoped>
-</style>
+<style scoped></style>

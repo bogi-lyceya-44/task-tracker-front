@@ -1,17 +1,15 @@
 <script lang="ts">
-import {defineComponent} from 'vue'
+import { defineComponent } from "vue";
 import BoardsList from "../components/BoardsList.vue";
 
 export default defineComponent({
   name: "HomeView",
-  components: {BoardsList}
-})
+  components: { BoardsList },
+});
 </script>
 
 <template>
-  <BoardsList/>
+  <BoardsList />
 </template>
 
-<style scoped>
-
-</style>
+<style scoped></style>
