@@ -1,5 +1,5 @@
 <script lang="ts">
-import { defineComponent } from 'vue';
+import {defineComponent} from 'vue';
 
 export default defineComponent({
   name: "ProfilePreview",
@@ -14,7 +14,9 @@ export default defineComponent({
     },
     handleClickOutside(event: MouseEvent) {
       const wrapper = this.$refs.wrapper as HTMLElement;
-      if (this.isOpen && wrapper && !wrapper.contains(event.target as Node)) {
+      if (this.isOpen &&
+          wrapper &&
+          !wrapper.contains(event.target as Node)) {
         this.isOpen = false;
       }
     }
@@ -49,16 +51,16 @@ export default defineComponent({
             alt="avatar"
         >
         <div class="account-info__content">
-          <span class="account-info__nickname">EmoPrincessShine</span>
+          <span class="account-info__nickname">Emo Princess Shine</span>
           <span class="account-info__email">petr.ahtimirov@gmail.com</span>
         </div>
       </div>
       <hr class="menu__hr"/>
       <div class="menu__list">
-        <a class="menu__item" href="/">
+        <RouterLink class="menu__item" to="/profile" @click="isOpen = false">
           <span>Profile</span>
-        </a>
-        <button class="menu__item danger">
+        </RouterLink>
+        <button class="menu__item danger" @click="isOpen = false">
           <span>Sign out</span>
           <img class="menu__item__icon" src="../assets/icons/log_out.svg" alt="Log out">
         </button>
@@ -100,6 +102,7 @@ export default defineComponent({
   padding: 0.5em;
   border: 1px solid var(--border-light-color);
   border-radius: 1em;
+  box-shadow: 0 0.4em 1em 0 var(--border-light-color);
   opacity: 0;
   transform: translateY(-0.5em);
   pointer-events: none;
@@ -166,7 +169,7 @@ export default defineComponent({
   color: var(--text-color);
   font-size: 1em;
   background-color: inherit;
-  font-weight: 500;
+  font-weight: 400;
   border: none;
   padding: 0 0.6em;
   border-radius: 0.6em;

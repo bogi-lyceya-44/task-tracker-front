@@ -10,7 +10,9 @@ export default defineComponent({
 
 <template>
   <div class="navbar">
-    <a class="logo" href="/">task tracker</a>
+    <RouterLink class="logo" to="/">
+      task tracker
+    </RouterLink>
     <ProfilePreview/>
   </div>
 </template>

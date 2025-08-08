@@ -8,11 +8,11 @@ export default defineComponent({
 </script>
 
 <template>
-  <a class="board-link" href="#">
+  <RouterLink class="board-link" to="#">
     <div class="board-card">
       card
     </div>
-  </a>
+  </RouterLink>
 </template>
 
 <style scoped>

@@ -22,7 +22,13 @@ export default defineComponent({
 
 <template>
   <section class="boards-list-section">
-    <h1 class="title">Boards List</h1>
+    <div class="panel">
+      <h1 class="title">Boards List</h1>
+      <button class="btn">
+        <img class="button__plus" src="../assets/icons/plus.svg" alt="plus">
+        New board
+      </button>
+    </div>
     <div class="boards-list">
       <BoardCard
           v-for="board in boards"
@@ -38,6 +44,11 @@ export default defineComponent({
   padding: 1.8em 2em;
 }
 
+.panel {
+  display: flex;
+  justify-content: space-between;
+}
+
 .title {
   margin: 0;
   font-size: 2.25em;
@@ -50,5 +61,9 @@ export default defineComponent({
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(12em, 1fr));
   gap: 1em;
+}
+
+.button__plus {
+  height: 0.9em;
 }
 </style>
