@@ -1,46 +1,84 @@
 <script lang="ts">
-import { defineComponent, type ComponentPublicInstance } from "vue";
+import { defineComponent, ref } from "vue";
+
 import BoardCard from "./BoardCard.vue";
+
+interface Board {
+  id: string;
+  name: string;
+}
 
 export default defineComponent({
   name: "BoardsList",
   components: { BoardCard },
-  data() {
+  setup() {
+    const boards = ref<Board[]>([
+      { id: "0", name: "board 1" },
+      { id: "1", name: "board 2" },
+      { id: "2", name: "board 3" },
+      { id: "3", name: "board 4" },
+      { id: "4", name: "board 5" },
+      { id: "5", name: "board 6" },
+    ]);
+
+    const draggedIndex = ref<number | null>(null);
+
+    function reorder(arr: Board[], from: number, to: number): Board[] {
+      const copy = [...arr];
+      const [moved] = copy.splice(from, 1);
+      copy.splice(to, 0, moved);
+      return copy;
+    }
+
+    function handleDragStart(event: DragEvent, index: number) {
+      draggedIndex.value = index;
+
+      const target = event.target as HTMLElement;
+      if (!target) return;
+
+      const dragGhost = target.cloneNode(true) as HTMLElement;
+      const { width, height } = target.getBoundingClientRect();
+
+      Object.assign(dragGhost.style, {
+        height: `${height}px`,
+        left: "-1000px",
+        pointerEvents: "none",
+        position: "absolute",
+        top: "-1000px",
+        width: `${width}px`,
+      });
+
+      document.body.appendChild(dragGhost);
+
+      event.dataTransfer!.setDragImage(dragGhost, width / 2, height / 2);
+
+      setTimeout(() => document.body.removeChild(dragGhost), 0);
+    }
+
+    function handleDragOver(event: DragEvent, index: number) {
+      event.preventDefault();
+      if (draggedIndex.value === null || draggedIndex.value === index) return;
+
+      boards.value = reorder(boards.value, draggedIndex.value, index);
+      draggedIndex.value = index;
+    }
+
+    function handleDrop() {
+      draggedIndex.value = null;
+    }
+
+    function handleDragEnd() {
+      draggedIndex.value = null;
+    }
+
     return {
-      boards: [
-        { id: 0, name: "board" },
-        { id: 1, name: "board" },
-        { id: 2, name: "board" },
-        { id: 3, name: "board" },
-        { id: 4, name: "board" },
-        { id: 5, name: "board" },
-      ],
-      boardCardRefs: [] as HTMLElement[],
+      boards,
+      draggedIndex,
+      handleDragEnd,
+      handleDragOver,
+      handleDragStart,
+      handleDrop,
     };
-  },
-  mounted() {
-    this.dragAndDrop();
-  },
-  methods: {
-    setBoardCardRef(el: Element | ComponentPublicInstance | null) {
-      const domEl = (el as ComponentPublicInstance)?.$el ?? el;
-
-      if (domEl instanceof HTMLElement && !this.boardCardRefs.includes(domEl)) {
-        this.boardCardRefs.push(domEl);
-      }
-    },
-
-    dragAndDrop() {
-      for (const board of this.boardCardRefs) {
-        board.draggable = true;
-        board.addEventListener("dragstart", () => {
-          board.classList.add("dragging");
-        });
-        board.addEventListener("dragend", () => {
-          board.classList.remove("dragging");
-        });
-      }
-    },
   },
 });
 </script>
@@ -50,18 +88,25 @@ export default defineComponent({
     <div class="panel">
       <h1 class="title">Boards List</h1>
       <button class="btn">
-        <img class="button__plus" src="../assets/icons/plus.svg" alt="plus" />
+        <img class="button-image" src="../assets/icons/plus.svg" alt="plus" />
         New board
       </button>
     </div>
-    <div class="boards-list" ref="boardsList">
+    <TransitionGroup name="list" tag="div" class="boards-list">
       <BoardCard
-        v-for="board in boards"
+        v-for="(board, index) in boards"
         :key="board.id"
+        :id="board.id"
+        draggable="true"
+        @dragstart="handleDragStart($event, index)"
+        @dragover.prevent="handleDragOver($event, index)"
+        @drop="handleDrop"
+        @dragend="handleDragEnd"
         :name="board.name"
-        :ref="setBoardCardRef"
+        class="card"
+        :class="{ dragging: draggedIndex === index }"
       />
-    </div>
+    </TransitionGroup>
   </section>
 </template>
 
@@ -76,22 +121,39 @@ export default defineComponent({
 }
 
 .title {
-  margin: 0;
   font-size: 2.25em;
   font-weight: 500;
+  margin: 0;
 }
 
 .boards-list {
+  display: grid;
+  gap: 1em;
+  grid-template-columns: repeat(auto-fit, minmax(12em, 1fr));
+  margin-top: 2em;
   max-width: calc(
     16em * v-bind("boards.length") + 1em * (v-bind("boards.length") - 1)
   );
-  margin-top: 2em;
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(12em, 1fr));
-  gap: 1em;
+  transition: 0.4s;
 }
 
-.button__plus {
+.button-image {
   height: 0.9em;
+}
+
+.card {
+  transition: 0.3s;
+}
+
+.dragging {
+  color: var(--text-light-color);
+  opacity: 0.4;
+  overflow: hidden;
+  position: relative;
+}
+
+.list-move {
+  pointer-events: none;
+  transition: all 0.4s ease;
 }
 </style>

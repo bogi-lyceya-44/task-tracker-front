@@ -1,8 +1,8 @@
-import js from "@eslint/js";
+import { defineConfig } from "eslint/config";
+import simpleImportSort from "eslint-plugin-simple-import-sort";
+import pluginVue from "eslint-plugin-vue";
 import globals from "globals";
 import tseslint from "typescript-eslint";
-import pluginVue from "eslint-plugin-vue";
-import { defineConfig } from "eslint/config";
 
 export default defineConfig([
   {
@@ -10,14 +10,42 @@ export default defineConfig([
   },
   {
     files: ["**/*.{js,mjs,cjs,ts,mts,cts,vue}"],
-    plugins: { js },
-    extends: ["js/recommended"],
+    plugins: { "simple-import-sort": simpleImportSort },
+    extends: [],
     languageOptions: { globals: globals.browser },
+    rules: {
+      "simple-import-sort/imports": "error",
+      "simple-import-sort/exports": "error",
+    },
   },
   tseslint.configs.recommended,
   pluginVue.configs["flat/essential"],
   {
     files: ["**/*.vue"],
     languageOptions: { parserOptions: { parser: tseslint.parser } },
+    rules: {
+      "vue/order-in-components": [
+        "error",
+        {
+          order: [
+            "el",
+            "name",
+            "components",
+            "directives",
+            "props",
+            "emits",
+            "setup",
+            "data",
+            "computed",
+            "methods",
+            "watch",
+            "LIFECYCLE_HOOKS",
+            "template",
+            "render",
+            "renderError",
+          ],
+        },
+      ],
+    },
   },
 ]);
