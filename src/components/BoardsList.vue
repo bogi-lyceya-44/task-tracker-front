@@ -1,5 +1,6 @@
 <script lang="ts">
 import { defineComponent, ref } from "vue";
+
 import BoardCard from "./BoardCard.vue";
 
 interface Board {
@@ -39,12 +40,12 @@ export default defineComponent({
       const { width, height } = target.getBoundingClientRect();
 
       Object.assign(dragGhost.style, {
-        position: "absolute",
-        top: "-1000px",
+        height: `${height}px`,
         left: "-1000px",
         pointerEvents: "none",
+        position: "absolute",
+        top: "-1000px",
         width: `${width}px`,
-        height: `${height}px`,
       });
 
       document.body.appendChild(dragGhost);
@@ -73,10 +74,10 @@ export default defineComponent({
     return {
       boards,
       draggedIndex,
-      handleDragStart,
-      handleDragOver,
-      handleDrop,
       handleDragEnd,
+      handleDragOver,
+      handleDragStart,
+      handleDrop,
     };
   },
 });
@@ -87,7 +88,7 @@ export default defineComponent({
     <div class="panel">
       <h1 class="title">Boards List</h1>
       <button class="btn">
-        <img class="button__plus" src="../assets/icons/plus.svg" alt="plus" />
+        <img class="button-image" src="../assets/icons/plus.svg" alt="plus" />
         New board
       </button>
     </div>
@@ -119,23 +120,23 @@ export default defineComponent({
 }
 
 .title {
-  margin: 0;
   font-size: 2.25em;
   font-weight: 500;
+  margin: 0;
 }
 
 .boards-list {
+  display: grid;
+  gap: 1em;
+  grid-template-columns: repeat(auto-fit, minmax(12em, 1fr));
+  margin-top: 2em;
   max-width: calc(
     16em * v-bind("boards.length") + 1em * (v-bind("boards.length") - 1)
   );
-  margin-top: 2em;
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(12em, 1fr));
-  gap: 1em;
   transition: 0.4s;
 }
 
-.button__plus {
+.button-image {
   height: 0.9em;
 }
 
@@ -144,14 +145,14 @@ export default defineComponent({
 }
 
 .dragging {
-  position: relative;
-  overflow: hidden;
   color: var(--text-light-color);
-  opacity: 0.8;
+  opacity: 0.4;
+  overflow: hidden;
+  position: relative;
 }
 
 .list-move {
   pointer-events: none;
-  transition: all 0.4s;
+  transition: all 0.4s ease;
 }
 </style>

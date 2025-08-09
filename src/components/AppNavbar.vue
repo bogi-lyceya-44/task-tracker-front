@@ -1,5 +1,6 @@
 <script lang="ts">
 import { defineComponent } from "vue";
+
 import ProfilePreview from "./ProfilePreview.vue";
 
 export default defineComponent({
@@ -17,12 +18,12 @@ export default defineComponent({
 
 <style scoped>
 .navbar {
-  height: 3.2em;
-  display: flex;
-  justify-content: space-between;
   align-items: center;
-  padding: 0 2em;
   border-bottom: 1px solid var(--border-light-color);
+  display: flex;
+  height: 3.2em;
+  justify-content: space-between;
+  padding: 0 2em;
 }
 
 .logo {

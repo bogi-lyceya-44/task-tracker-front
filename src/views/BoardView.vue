@@ -2,8 +2,8 @@
 import { defineComponent } from "vue";
 
 export default defineComponent({
-  name: "ProfileView",
+  name: "BoardView",
 });
 </script>
 
-<template>Profile view</template>
+<template>board view</template>

@@ -9,21 +9,21 @@ export default defineComponent({
     };
   },
   methods: {
-    openProfilePreview() {
-      this.isOpen = !this.isOpen;
-    },
     handleClickOutside(event: MouseEvent) {
       const wrapper = this.$refs.wrapper as HTMLElement;
       if (this.isOpen && wrapper && !wrapper.contains(event.target as Node)) {
         this.isOpen = false;
       }
     },
-  },
-  mounted() {
-    document.addEventListener("click", this.handleClickOutside);
+    openProfilePreview() {
+      this.isOpen = !this.isOpen;
+    },
   },
   beforeUnmount() {
     document.removeEventListener("click", this.handleClickOutside);
+  },
+  mounted() {
+    document.addEventListener("click", this.handleClickOutside);
   },
 });
 </script>
@@ -36,24 +36,24 @@ export default defineComponent({
     <div class="menu" :class="{ open: isOpen }">
       <div class="account-info">
         <img
-          class="account-info__avatar"
+          class="account-avatar"
           src="../assets/images/avatar.jpg"
           alt="avatar"
         />
-        <div class="account-info__content">
-          <span class="account-info__nickname">Emo Princess Shine</span>
-          <span class="account-info__email">petr.ahtimirov@gmail.com</span>
+        <div class="account-content">
+          <span class="account-nickname">Emo Princess Shine</span>
+          <span class="account-email">petr.ahtimirov@gmail.com</span>
         </div>
       </div>
-      <hr class="menu__hr" />
-      <div class="menu__list">
-        <RouterLink class="menu__item" to="/profile" @click="isOpen = false">
+      <hr class="hr" />
+      <div class="menu-list">
+        <RouterLink class="menu-item" to="/profile" @click="isOpen = false">
           <span>Profile</span>
         </RouterLink>
-        <button class="menu__item danger" @click="isOpen = false">
+        <button class="menu-item danger" @click="isOpen = false">
           <span>Sign out</span>
           <img
-            class="menu__item__icon"
+            class="menu-item-icon"
             src="../assets/icons/log_out.svg"
             alt="Log out"
           />
@@ -69,36 +69,36 @@ export default defineComponent({
 }
 
 .profile-preview {
-  font-family: "Avenir", sans-serif;
-  font-size: 1em;
   background-color: inherit;
+  border: none;
   border-radius: 2em;
+  cursor: pointer;
+  display: flex;
+  font-family: Avenir, sans-serif;
+  font-size: 1em;
   outline: 0;
   padding: 0;
-  display: flex;
-  cursor: pointer;
-  border: none;
 }
 
 .avatar {
+  border: 1px solid var(--border-light-color);
   border-radius: 2em;
   height: 2em;
   width: 2em;
-  border: 1px solid var(--border-light-color);
 }
 
 .menu {
-  position: absolute;
-  top: 3em;
-  right: 0;
   background-color: var(--background-color);
-  padding: 0.5em;
   border: 1px solid var(--border-light-color);
   border-radius: 1em;
   box-shadow: 0 0.4em 1em 0 var(--border-light-color);
   opacity: 0;
-  transform: translateY(-0.5em);
+  padding: 0.5em;
   pointer-events: none;
+  position: absolute;
+  right: 0;
+  top: 3em;
+  transform: translateY(-0.5em);
   transition:
     opacity 0.3s ease,
     transform 0.3s ease;
@@ -106,85 +106,85 @@ export default defineComponent({
 
 .menu.open {
   opacity: 1;
-  transform: translateY(0);
   pointer-events: auto;
+  transform: translateY(0);
 }
 
 .account-info {
-  display: flex;
   align-items: center;
+  display: flex;
   gap: 1em;
 }
 
-.account-info__avatar {
+.account-avatar {
+  border: 1px solid var(--border-light-color);
   border-radius: 2em;
   height: 3.2em;
   width: 3.2em;
-  border: 1px solid var(--border-light-color);
 }
 
-.account-info__content {
+.account-content {
   display: flex;
   flex-direction: column;
   min-width: 8em;
 }
 
-.account-info__nickname {
+.account-nickname {
   max-width: 12em;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
-.account-info__email {
+.account-email {
+  color: var(--text-light-color);
   font-size: 0.8em;
   max-width: 12em;
   overflow: hidden;
   text-overflow: ellipsis;
-  color: var(--text-light-color);
 }
 
-.menu__hr {
-  height: 1px;
+.hr {
   background-color: var(--border-light-color);
   border: none;
+  height: 1px;
 }
 
-.menu__list {
+.menu-list {
   display: flex;
   flex-direction: column;
   gap: 0.3em;
 }
 
-.menu__item {
-  height: 2.5em;
-  width: 100%;
-  display: flex;
+.menu-item {
   align-items: center;
-  justify-content: space-between;
-  color: var(--text-color);
-  font-size: 1em;
   background-color: inherit;
-  font-weight: 400;
   border: none;
-  padding: 0 0.6em;
   border-radius: 0.6em;
+  color: var(--text-color);
   cursor: pointer;
+  display: flex;
+  font-size: 1em;
+  font-weight: 400;
+  height: 2.5em;
+  justify-content: space-between;
+  padding: 0 0.6em;
   transition: 0.3s;
+  width: 100%;
 }
 
-.menu__item.danger {
+.menu-item.danger {
   color: var(--text-danger-color);
 }
 
-.menu__item:hover {
+.menu-item:hover {
   background-color: var(--background-focus-color);
 }
 
-.menu__item.danger:hover {
+.menu-item.danger:hover {
   background-color: var(--background-danger-color);
 }
 
-.menu__item__icon {
+.menu-item-icon {
   height: 1.2em;
 }
 </style>
