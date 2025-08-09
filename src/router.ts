@@ -6,7 +6,7 @@ import ProfileView from "./views/ProfileView.vue";
 
 const routes = [
   { path: "/", component: HomeView },
-  { path: "/board", component: BoardView },
+  { path: "/board/:id", component: BoardView },
   { path: "/profile", component: ProfileView },
 ];
 

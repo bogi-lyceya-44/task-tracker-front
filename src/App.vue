@@ -14,12 +14,18 @@ export default defineComponent({
 <template>
   <div class="app" @dragover.stop.prevent>
     <Navbar />
-    <RouterView />
+    <RouterView class="main-content" />
   </div>
 </template>
 
 <style scoped>
 .app {
+  display: flex;
+  flex-direction: column;
   min-height: 100vh;
+}
+
+.main-content {
+  flex: 1;
 }
 </style>

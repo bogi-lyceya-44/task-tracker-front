@@ -4,6 +4,10 @@ import { defineComponent } from "vue";
 export default defineComponent({
   name: "BoardCard",
   props: {
+    id: {
+      required: true,
+      type: String,
+    },
     name: {
       required: true,
       type: String,
@@ -13,7 +17,7 @@ export default defineComponent({
 </script>
 
 <template>
-  <RouterLink class="board-link" to="/board">
+  <RouterLink class="board-link" :to="`/board/${id}`">
     <div class="board-card">
       <div class="board-card-info">
         {{ name }}

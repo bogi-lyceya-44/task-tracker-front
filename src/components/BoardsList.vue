@@ -4,7 +4,7 @@ import { defineComponent, ref } from "vue";
 import BoardCard from "./BoardCard.vue";
 
 interface Board {
-  id: number;
+  id: string;
   name: string;
 }
 
@@ -13,12 +13,12 @@ export default defineComponent({
   components: { BoardCard },
   setup() {
     const boards = ref<Board[]>([
-      { id: 0, name: "board 1" },
-      { id: 1, name: "board 2" },
-      { id: 2, name: "board 3" },
-      { id: 3, name: "board 4" },
-      { id: 4, name: "board 5" },
-      { id: 5, name: "board 6" },
+      { id: "0", name: "board 1" },
+      { id: "1", name: "board 2" },
+      { id: "2", name: "board 3" },
+      { id: "3", name: "board 4" },
+      { id: "4", name: "board 5" },
+      { id: "5", name: "board 6" },
     ]);
 
     const draggedIndex = ref<number | null>(null);
@@ -96,6 +96,7 @@ export default defineComponent({
       <BoardCard
         v-for="(board, index) in boards"
         :key="board.id"
+        :id="board.id"
         draggable="true"
         @dragstart="handleDragStart($event, index)"
         @dragover.prevent="handleDragOver($event, index)"
