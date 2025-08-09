@@ -1,4 +1,4 @@
-name: Lint and Format Check
+name: lint and format check
 
 on:
   push:
@@ -8,7 +8,7 @@ on:
 
 jobs:
   lint:
-    name: ESLint Check
+    name: eslint-check
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -19,7 +19,7 @@ jobs:
       - run: npm run lint_check
 
   prettier:
-    name: Prettier Check
+    name: prettier-check
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4

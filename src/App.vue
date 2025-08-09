@@ -11,8 +11,14 @@ export default defineComponent({
 </script>
 
 <template>
-  <Navbar />
-  <RouterView />
+  <div class="app" @dragover.stop.prevent>
+    <Navbar />
+    <RouterView />
+  </div>
 </template>
 
-<style scoped></style>
+<style scoped>
+.app {
+  min-height: 100vh;
+}
+</style>
