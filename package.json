@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "vite",
     "build": "vue-tsc -b && vite build",
+    "deploy": "gh-pages -d dist",
     "preview": "vite preview",
     "lint_check": "npx eslint . ; stylelint '**/*.{css,scss,vue}'",
     "lint_fix": "npx eslint . --fix ; stylelint '**/*.{css,scss,vue}' --fix",
@@ -29,6 +30,7 @@
     "eslint": "^9.33.0",
     "eslint-plugin-simple-import-sort": "^12.1.1",
     "eslint-plugin-vue": "^10.4.0",
+    "gh-pages": "^6.3.0",
     "globals": "^16.3.0",
     "jiti": "^2.5.1",
     "prettier": "^3.6.2",
