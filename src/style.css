@@ -6,6 +6,7 @@
 
   --background-color: #ffffff;
   --background-focus-color: #f2f2f2;
+  --background-second-color: #f7f6fa;
   --border-light-color: #dbdbdb;
 
   --text-danger-color: #b01212;
@@ -35,7 +36,7 @@ button {
 
 .btn {
   height: fit-content;
-  padding: 0.5em 1.2em;
+  padding: 0.5em 1em;
   display: flex;
   align-items: center;
   gap: 0.5em;
