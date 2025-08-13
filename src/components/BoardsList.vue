@@ -1,6 +1,7 @@
 <script lang="ts">
 import { defineComponent, ref } from "vue";
 
+import { boardsList } from "../dataMock.ts";
 import BoardCard from "./BoardCard.vue";
 
 interface Board {
@@ -12,14 +13,7 @@ export default defineComponent({
   name: "BoardsList",
   components: { BoardCard },
   setup() {
-    const boards = ref<Board[]>([
-      { id: "0", name: "board 1" },
-      { id: "1", name: "board 2" },
-      { id: "2", name: "board 3" },
-      { id: "3", name: "board 4" },
-      { id: "4", name: "board 5" },
-      { id: "5", name: "board 6" },
-    ]);
+    const boards = ref<Board[]>(boardsList);
 
     const draggedIndex = ref<number | null>(null);
 

@@ -15,7 +15,18 @@ export default defineComponent({
 <template>
   <section class="board-panel-section">
     <div class="board-panel">
-      <h1 class="title">{{ name }}</h1>
+      <div class="info">
+        <div class="breadcrumbs">
+          <RouterLink to="/">Home</RouterLink>
+          <img
+            class="breadcrumbs-pointer"
+            src="../assets/icons/arrow_right.svg"
+            alt="pointer"
+          />
+          <span>{{ name }}</span>
+        </div>
+        <h1 class="title">{{ name }}</h1>
+      </div>
     </div>
   </section>
 </template>
@@ -35,8 +46,35 @@ export default defineComponent({
 }
 
 .title {
-  font-size: 1.6em;
+  font-size: 1.4em;
   font-weight: 400;
   margin: 0;
+}
+
+.info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5em;
+}
+
+.breadcrumbs {
+  align-items: center;
+  color: var(--text-light-color);
+  display: flex;
+  font-size: 0.9em;
+  font-weight: 400;
+  gap: 0.6em;
+}
+
+.breadcrumbs-pointer {
+  height: 0.6em;
+}
+
+.breadcrumbs > a {
+  color: var(--text-light-color);
+}
+
+.breadcrumbs > a:hover {
+  text-decoration: underline;
 }
 </style>
