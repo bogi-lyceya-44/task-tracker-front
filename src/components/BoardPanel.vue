@@ -1,8 +1,11 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 
+import BaseIcon from "./BaseIcon.vue";
+
 export default defineComponent({
   name: "BoardPanel",
+  components: { BaseIcon },
   props: {
     name: {
       required: true,
@@ -18,9 +21,9 @@ export default defineComponent({
       <div class="info">
         <div class="breadcrumbs">
           <RouterLink to="/">Home</RouterLink>
-          <img
+          <BaseIcon
             class="breadcrumbs-pointer"
-            src="../assets/icons/arrow_right.svg"
+            name="arrow_right"
             alt="pointer"
           />
           <span>{{ name }}</span>
@@ -68,6 +71,7 @@ export default defineComponent({
 
 .breadcrumbs-pointer {
   height: 0.6em;
+  width: 0.6em;
 }
 
 .breadcrumbs > a {

@@ -1,8 +1,11 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 
+import BaseIcon from "./BaseIcon.vue";
+
 export default defineComponent({
   name: "ProfilePreview",
+  components: { BaseIcon },
   data() {
     return {
       isOpen: false,
@@ -52,11 +55,7 @@ export default defineComponent({
         </RouterLink>
         <button class="menu-item danger" @click="isOpen = false">
           <span>Sign out</span>
-          <img
-            class="menu-item-icon"
-            src="../assets/icons/log_out.svg"
-            alt="Log out"
-          />
+          <BaseIcon class="menu-item-icon" name="log_out" alt="Log out" />
         </button>
       </div>
     </div>
@@ -186,5 +185,6 @@ export default defineComponent({
 
 .menu-item-icon {
   height: 1.2em;
+  width: 1.2em;
 }
 </style>

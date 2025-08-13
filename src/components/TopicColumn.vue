@@ -1,5 +1,5 @@
 <script lang="ts">
-import { defineComponent, type PropType } from "vue";
+import { defineComponent, type PropType, ref } from "vue";
 
 import { type TaskCardType } from "../types";
 import TaskCard from "./TaskCard.vue";
@@ -8,22 +8,53 @@ export default defineComponent({
   name: "TopicColumn",
   components: { TaskCard },
   props: {
-    ondragstart: Function,
-    name: {
-      required: true,
-      type: String,
-    },
-    cards: {
-      required: true,
-      type: Array as PropType<TaskCardType[]>,
-    },
+    name: { required: true, type: String },
+    cards: { required: true, type: Array as PropType<TaskCardType[]> },
+  },
+  emits: ["dragstart"],
+  setup(_, { emit }) {
+    const allowDrag = ref(false);
+
+    function onMouseDown() {
+      allowDrag.value = true;
+    }
+    function onMouseUp() {
+      allowDrag.value = false;
+    }
+    function onMouseLeave() {
+      allowDrag.value = false;
+    }
+    function onDragStart(event: DragEvent) {
+      if (!allowDrag.value) {
+        event.preventDefault();
+        return;
+      }
+      emit("dragstart", event);
+    }
+
+    return {
+      onMouseDown,
+      onMouseUp,
+      onMouseLeave,
+      onDragStart,
+    };
   },
 });
 </script>
 
 <template>
-  <div class="topic">
-    <div class="topic-top" draggable="true">
+  <div
+    class="topic"
+    draggable="true"
+    @dragstart="onDragStart"
+    @dragover.prevent
+  >
+    <div
+      class="topic-top"
+      @mousedown="onMouseDown"
+      @mouseup="onMouseUp"
+      @mouseleave="onMouseLeave"
+    >
       {{ name }}
     </div>
     <div class="cards-list">
@@ -40,6 +71,7 @@ export default defineComponent({
 }
 
 .topic-top {
+  cursor: pointer;
   padding: 0.8em;
 }
 
@@ -47,6 +79,6 @@ export default defineComponent({
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
-  padding: 0.5em;
+  padding: 0 0.5em 0.5em;
 }
 </style>

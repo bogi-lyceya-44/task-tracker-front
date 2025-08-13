@@ -2,6 +2,7 @@
 import { defineComponent, ref } from "vue";
 
 import { boardsList } from "../dataMock.ts";
+import BaseIcon from "./BaseIcon.vue";
 import BoardCard from "./BoardCard.vue";
 
 interface Board {
@@ -11,10 +12,9 @@ interface Board {
 
 export default defineComponent({
   name: "BoardsList",
-  components: { BoardCard },
+  components: { BaseIcon, BoardCard },
   setup() {
     const boards = ref<Board[]>(boardsList);
-
     const draggedIndex = ref<number | null>(null);
 
     function reorder(arr: Board[], from: number, to: number): Board[] {
@@ -49,8 +49,7 @@ export default defineComponent({
       setTimeout(() => document.body.removeChild(dragGhost), 0);
     }
 
-    function handleDragOver(event: DragEvent, index: number) {
-      event.preventDefault();
+    function handleDragOver(index: number) {
       if (draggedIndex.value === null || draggedIndex.value === index) return;
 
       boards.value = reorder(boards.value, draggedIndex.value, index);
@@ -82,7 +81,7 @@ export default defineComponent({
     <div class="panel">
       <h1 class="title">Boards List</h1>
       <button class="btn">
-        <img class="button-image" src="../assets/icons/plus.svg" alt="plus" />
+        <BaseIcon name="plus" class="button-image" alt="plus" />
         New board
       </button>
     </div>
@@ -91,12 +90,12 @@ export default defineComponent({
         v-for="(board, index) in boards"
         :key="board.id"
         :id="board.id"
+        :name="board.name"
         draggable="true"
         @dragstart="handleDragStart($event, index)"
-        @dragover.prevent="handleDragOver($event, index)"
+        @dragover.prevent="handleDragOver(index)"
         @drop="handleDrop"
         @dragend="handleDragEnd"
-        :name="board.name"
         class="card"
         :class="{ dragging: draggedIndex === index }"
       />
@@ -128,11 +127,12 @@ export default defineComponent({
   max-width: calc(
     16em * v-bind("boards.length") + 1em * (v-bind("boards.length") - 1)
   );
-  transition: 0.4s;
 }
 
 .button-image {
+  color: #fff;
   height: 0.9em;
+  width: 0.9em;
 }
 
 .card {

@@ -36,7 +36,7 @@ button {
 
 .btn {
   height: fit-content;
-  padding: 0.5em 1.2em;
+  padding: 0.5em 1em;
   display: flex;
   align-items: center;
   gap: 0.5em;
