@@ -4,4 +4,7 @@ import svgLoader from "vite-svg-loader";
 
 export default defineConfig({
   plugins: [vue(), svgLoader({ svgo: false })],
+  base: process.env.NODE_ENV === 'production'
+      ? '/task-tracker-front/'
+      : '/',
 });
