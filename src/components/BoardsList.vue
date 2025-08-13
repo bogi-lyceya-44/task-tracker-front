@@ -1,6 +1,7 @@
 <script lang="ts">
 import { defineComponent, ref } from "vue";
 
+import { useDragAndDrop } from "../composables/useDragAndDrop.ts";
 import { boardsList } from "../dataMock.ts";
 import BaseIcon from "./BaseIcon.vue";
 import BoardCard from "./BoardCard.vue";
@@ -15,62 +16,25 @@ export default defineComponent({
   components: { BaseIcon, BoardCard },
   setup() {
     const boards = ref<Board[]>(boardsList);
-    const draggedIndex = ref<number | null>(null);
+    const {
+      draggedIndex,
+      handleDragStart,
+      handleDragOver,
+      handleDrop,
+      handleDragEnd,
+    } = useDragAndDrop<Board>();
 
-    function reorder(arr: Board[], from: number, to: number): Board[] {
-      const copy = [...arr];
-      const [moved] = copy.splice(from, 1);
-      copy.splice(to, 0, moved);
-      return copy;
-    }
-
-    function handleDragStart(event: DragEvent, index: number) {
-      draggedIndex.value = index;
-
-      const target = event.target as HTMLElement;
-      if (!target) return;
-
-      const dragGhost = target.cloneNode(true) as HTMLElement;
-      const { width, height } = target.getBoundingClientRect();
-
-      Object.assign(dragGhost.style, {
-        height: `${height}px`,
-        left: "-1000px",
-        pointerEvents: "none",
-        position: "absolute",
-        top: "-1000px",
-        width: `${width}px`,
-      });
-
-      document.body.appendChild(dragGhost);
-
-      event.dataTransfer!.setDragImage(dragGhost, width / 2, height / 2);
-
-      setTimeout(() => document.body.removeChild(dragGhost), 0);
-    }
-
-    function handleDragOver(index: number) {
-      if (draggedIndex.value === null || draggedIndex.value === index) return;
-
-      boards.value = reorder(boards.value, draggedIndex.value, index);
-      draggedIndex.value = index;
-    }
-
-    function handleDrop() {
-      draggedIndex.value = null;
-    }
-
-    function handleDragEnd() {
-      draggedIndex.value = null;
+    function onDragOver(index: number) {
+      boards.value = handleDragOver(boards.value, index);
     }
 
     return {
       boards,
       draggedIndex,
-      handleDragEnd,
-      handleDragOver,
       handleDragStart,
+      onDragOver,
       handleDrop,
+      handleDragEnd,
     };
   },
 });
@@ -81,27 +45,28 @@ export default defineComponent({
     <div class="panel">
       <h1 class="title">Boards List</h1>
       <button class="btn">
-        <BaseIcon name="plus" class="button-image" alt="plus" />
-        New board
+        <BaseIcon name="plus" class="button-image" alt="plus" /> New board
       </button>
     </div>
+
     <TransitionGroup name="list" tag="div" class="boards-list">
       <BoardCard
-        v-for="(board, index) in boards"
-        :key="board.id"
-        :id="board.id"
-        :name="board.name"
-        draggable="true"
-        @dragstart="handleDragStart($event, index)"
-        @dragover.prevent="handleDragOver(index)"
-        @drop="handleDrop"
-        @dragend="handleDragEnd"
-        class="card"
-        :class="{ dragging: draggedIndex === index }"
+          v-for="(board, index) in boards"
+          :key="board.id"
+          :id="board.id"
+          :name="board.name"
+          draggable="true"
+          @dragstart="handleDragStart($event, index)"
+          @dragover.prevent="onDragOver(index)"
+          @drop="handleDrop"
+          @dragend="handleDragEnd"
+          class="card"
+          :class="{ dragging: draggedIndex === index }"
       />
     </TransitionGroup>
   </section>
 </template>
+
 
 <style scoped>
 .boards-list-section {
