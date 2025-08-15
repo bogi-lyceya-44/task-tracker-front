@@ -58,7 +58,12 @@ export default defineComponent({
       {{ name }}
     </div>
     <div class="cards-list">
-      <TaskCard v-for="card in cards" :key="card.id" :title="card.title" />
+      <TaskCard
+        v-for="card in cards"
+        :key="card.id"
+        :title="card.title"
+        draggable="true"
+      />
     </div>
   </div>
 </template>

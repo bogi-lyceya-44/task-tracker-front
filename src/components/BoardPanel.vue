@@ -1,18 +1,7 @@
-<script lang="ts">
-import { defineComponent } from "vue";
-
+<script lang="ts" setup>
 import BaseIcon from "./BaseIcon.vue";
 
-export default defineComponent({
-  name: "BoardPanel",
-  components: { BaseIcon },
-  props: {
-    name: {
-      required: true,
-      type: String,
-    },
-  },
-});
+const name = defineModel("name", { required: true });
 </script>
 
 <template>
@@ -28,7 +17,8 @@ export default defineComponent({
           />
           <span>{{ name }}</span>
         </div>
-        <h1 class="title">{{ name }}</h1>
+        <!-- TODO: change lazy on custom input component with debounce -->
+        <input class="title-input" type="text" v-model.lazy="name" />
       </div>
     </div>
   </section>
@@ -48,10 +38,19 @@ export default defineComponent({
   padding: 1.2em;
 }
 
-.title {
+.title-input {
+  border: none;
+  border-radius: 0.3em;
+  font-family: Avenir, sans-serif;
   font-size: 1.4em;
   font-weight: 400;
   margin: 0;
+  padding: 0.16em;
+}
+
+.title-input:focus {
+  background-color: var(--background-second-color);
+  outline: 2px solid var(--border-light-color);
 }
 
 .info {

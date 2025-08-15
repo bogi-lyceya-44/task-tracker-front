@@ -1,6 +1,7 @@
 <script lang="ts">
 import { defineComponent, ref } from "vue";
 
+import { useDragAndDrop } from "../composables/useDragAndDrop.ts";
 import { topicsList } from "../dataMock.ts";
 import type { TaskCardType } from "../types.ts";
 import BaseIcon from "./BaseIcon.vue";
@@ -17,59 +18,23 @@ export default defineComponent({
   components: { BaseIcon, TopicColumn },
   setup() {
     const topics = ref<Topic[]>(topicsList);
-    const draggedIndex = ref<number | null>(null);
+    const {
+      draggedIndex,
+      handleDragStart,
+      handleDragOver,
+      handleDrop,
+      handleDragEnd,
+    } = useDragAndDrop<Topic>();
 
-    function reorder(arr: Topic[], from: number, to: number): Topic[] {
-      const copy = [...arr];
-      const [moved] = copy.splice(from, 1);
-      copy.splice(to, 0, moved);
-      return copy;
-    }
-
-    function handleDragStart(event: DragEvent, index: number) {
-      draggedIndex.value = index;
-
-      const target = event.currentTarget as HTMLElement;
-      const dragGhost = target.cloneNode(true) as HTMLElement;
-      const { width, height } = target.getBoundingClientRect();
-
-      Object.assign(dragGhost.style, {
-        height: `${height}px`,
-        width: `${width}px`,
-        left: "-1000px",
-        top: "-1000px",
-        position: "absolute",
-        pointerEvents: "none",
-        zIndex: "9999",
-      });
-
-      document.body.appendChild(dragGhost);
-
-      event.dataTransfer!.setDragImage(dragGhost, width / 2, 20);
-
-      setTimeout(() => document.body.removeChild(dragGhost), 0);
-    }
-
-    function handleDragOver(index: number) {
-      if (draggedIndex.value === null || draggedIndex.value === index) return;
-
-      topics.value = reorder(topics.value, draggedIndex.value, index);
-      draggedIndex.value = index;
-    }
-
-    function handleDrop() {
-      draggedIndex.value = null;
-    }
-
-    function handleDragEnd() {
-      draggedIndex.value = null;
+    function onDragOver(index: number) {
+      topics.value = handleDragOver(topics.value, index);
     }
 
     return {
       topics,
       draggedIndex,
       handleDragStart,
-      handleDragOver,
+      onDragOver,
       handleDrop,
       handleDragEnd,
     };
@@ -86,8 +51,8 @@ export default defineComponent({
           :key="topic.id"
           :cards="topic.cards"
           :name="topic.name"
-          @dragstart="handleDragStart($event, index)"
-          @dragover.prevent="handleDragOver(index)"
+          @dragstart="handleDragStart($event, index, 'top')"
+          @dragover.prevent="onDragOver(index)"
           @drop="handleDrop"
           @dragend="handleDragEnd"
           class="topic"
