@@ -10,7 +10,7 @@ function useDragAndDrop<T>() {
         return copy;
     }
 
-    function handleDragStart(event: DragEvent, index: number) {
+    function handleDragStart(event: DragEvent, index: number, pos: "top" | "mid" = "mid") {
         draggedIndex.value = index;
 
         const target = event.target as HTMLElement;
@@ -29,7 +29,11 @@ function useDragAndDrop<T>() {
         });
 
         document.body.appendChild(dragGhost);
-        event.dataTransfer!.setDragImage(dragGhost, width / 2, height / 2);
+        if (pos === "top") {
+            event.dataTransfer!.setDragImage(dragGhost, width / 2, 20);
+        } else {
+            event.dataTransfer!.setDragImage(dragGhost, width / 2, height / 2);
+        }
         setTimeout(() => document.body.removeChild(dragGhost), 0);
     }
 

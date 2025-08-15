@@ -15,7 +15,7 @@ interface Topic {
 
 export default defineComponent({
   name: "TopicsList",
-  components: {BaseIcon, TopicColumn },
+  components: {BaseIcon, TopicColumn},
   setup() {
     const topics = ref<Topic[]>(topicsList);
     const {
@@ -51,7 +51,7 @@ export default defineComponent({
           :key="topic.id"
           :cards="topic.cards"
           :name="topic.name"
-          @dragstart="handleDragStart($event, index)"
+          @dragstart="handleDragStart($event, index, 'top')"
           @dragover.prevent="onDragOver(index)"
           @drop="handleDrop"
           @dragend="handleDragEnd"

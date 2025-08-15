@@ -1,8 +1,9 @@
-<script lang="ts">
-import { defineComponent, ref } from "vue";
+<script lang="ts" setup>
+import { onMounted, ref } from "vue";
+import {useRouter} from "vue-router";
 
 import { useDragAndDrop } from "../composables/useDragAndDrop.ts";
-import { boardsList } from "../dataMock.ts";
+import { request } from "../utils/httpRequest.ts";
 import BaseIcon from "./BaseIcon.vue";
 import BoardCard from "./BoardCard.vue";
 
@@ -11,40 +12,56 @@ interface Board {
   name: string;
 }
 
-export default defineComponent({
-  name: "BoardsList",
-  components: { BaseIcon, BoardCard },
-  setup() {
-    const boards = ref<Board[]>(boardsList);
-    const {
-      draggedIndex,
-      handleDragStart,
-      handleDragOver,
-      handleDrop,
-      handleDragEnd,
-    } = useDragAndDrop<Board>();
+const boards = ref<Board[]>([]);
+const router = useRouter();
 
-    function onDragOver(index: number) {
-      boards.value = handleDragOver(boards.value, index);
-    }
+const {
+  draggedIndex,
+  handleDragStart,
+  handleDragOver,
+  handleDragEnd,
+} = useDragAndDrop<Board>();
 
-    return {
-      boards,
-      draggedIndex,
-      handleDragStart,
-      onDragOver,
-      handleDrop,
-      handleDragEnd,
-    };
-  },
+onMounted(async () => {
+  const boardsRes = (await request("/get_all_boards", "POST", {})).boards;
+  const boardsOrder = (await request("/get_board_order", "POST", {})).order;
+
+  boards.value = [...boardsRes].sort((a, b) => {
+    const orderA = boardsOrder[a.id] ?? Infinity;
+    const orderB = boardsOrder[b.id] ?? Infinity;
+    return orderA - orderB;
+  });
 });
+
+async function onDropBoardCard() {
+  handleDragEnd();
+  const boardsPlaces = boards.value.map((board, index) => ({boardId: board.id, place: index+1}));
+  await request("/change_board_order", "POST", {changes: boardsPlaces});
+}
+
+
+function onDragOver(index: number) {
+  boards.value = handleDragOver(boards.value, index);
+}
+
+async function onCreateNewBoard() {
+  const boardId = (await request("/create_boards", 'POST', {
+    "boardsToCreate": [
+      {
+        "name": "New board",
+        "topicIds": []
+      }
+    ]
+  })).ids[0];
+  await router.push(`/board/${boardId}`);
+}
 </script>
 
 <template>
   <section class="boards-list-section">
     <div class="panel">
       <h1 class="title">Boards List</h1>
-      <button class="btn">
+      <button class="btn" @click="onCreateNewBoard">
         <BaseIcon name="plus" class="button-image" alt="plus" /> New board
       </button>
     </div>
@@ -58,15 +75,13 @@ export default defineComponent({
           draggable="true"
           @dragstart="handleDragStart($event, index)"
           @dragover.prevent="onDragOver(index)"
-          @drop="handleDrop"
-          @dragend="handleDragEnd"
+          @dragend="onDropBoardCard"
           class="card"
           :class="{ dragging: draggedIndex === index }"
       />
     </TransitionGroup>
   </section>
 </template>
-
 
 <style scoped>
 .boards-list-section {
@@ -90,7 +105,7 @@ export default defineComponent({
   grid-template-columns: repeat(auto-fit, minmax(12em, 1fr));
   margin-top: 2em;
   max-width: calc(
-    16em * v-bind("boards.length") + 1em * (v-bind("boards.length") - 1)
+      16em * v-bind("boards.length") + 1em * (v-bind("boards.length") - 1)
   );
 }
 
