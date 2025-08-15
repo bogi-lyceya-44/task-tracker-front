@@ -1,4 +1,4 @@
-import type {BodyType} from "../types.ts";
+import type { BodyType } from "../types.ts";
 
 type Method = "GET" | "POST" | "DELETE" | "UPDATE";
 type Headers = Record<string, string>;
@@ -14,7 +14,7 @@ async function request(
   const response = await fetch(`${baseUrl}${url}`, {
     method,
     body: JSON.stringify(body),
-    headers
+    headers,
   });
 
   if (!response.ok) {

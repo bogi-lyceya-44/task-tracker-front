@@ -4,5 +4,5 @@ export type TaskCardType = {
 };
 
 export type BodyType = {
-  [key: string]: number | string | never | BodyType | BodyType[];
+  [key: string]: number | string | string[] | never | BodyType | BodyType[];
 };

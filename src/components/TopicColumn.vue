@@ -59,10 +59,10 @@ export default defineComponent({
     </div>
     <div class="cards-list">
       <TaskCard
-          v-for="card in cards"
-          :key="card.id"
-          :title="card.title"
-          draggable="true"
+        v-for="card in cards"
+        :key="card.id"
+        :title="card.title"
+        draggable="true"
       />
     </div>
   </div>

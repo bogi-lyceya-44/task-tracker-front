@@ -1,18 +1,33 @@
-<script lang="ts">
-import { defineComponent } from "vue";
+<script setup lang="ts">
+import { onMounted, ref, watch } from "vue";
+import { useRoute } from "vue-router";
 
 import BoardPanel from "../components/BoardPanel.vue";
 import TopicsList from "../components/TopicsList.vue";
+import { request } from "../utils/httpRequest.ts";
 
-export default defineComponent({
-  name: "BoardView",
-  components: { BoardPanel, TopicsList },
+const boardName = ref("");
+const boardId = useRoute().params.id;
+
+onMounted(async () => {
+  const board = (
+    await request("/get_boards", "POST", { ids: [String(boardId)] })
+  ).boards[0];
+  boardName.value = board.name;
+});
+
+watch(boardName, async (boardName, prevBoardName) => {
+  if (boardName !== prevBoardName) {
+    await request("/update_boards", "POST", {
+      boardsToUpdate: [{ id: String(boardId), name: boardName }],
+    });
+  }
 });
 </script>
 
 <template>
   <div class="board-wrapper">
-    <BoardPanel :name="`board view ${$route.params.id}`" />
+    <BoardPanel v-model:name="boardName" />
     <TopicsList />
   </div>
 </template>

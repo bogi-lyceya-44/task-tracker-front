@@ -1,6 +1,6 @@
-<script lang="ts" setup>
+<script setup lang="ts">
 import { onMounted, ref } from "vue";
-import {useRouter} from "vue-router";
+import { useRouter } from "vue-router";
 
 import { useDragAndDrop } from "../composables/useDragAndDrop.ts";
 import { request } from "../utils/httpRequest.ts";
@@ -15,12 +15,8 @@ interface Board {
 const boards = ref<Board[]>([]);
 const router = useRouter();
 
-const {
-  draggedIndex,
-  handleDragStart,
-  handleDragOver,
-  handleDragEnd,
-} = useDragAndDrop<Board>();
+const { draggedIndex, handleDragStart, handleDragOver, handleDragEnd } =
+  useDragAndDrop<Board>();
 
 onMounted(async () => {
   const boardsRes = (await request("/get_all_boards", "POST", {})).boards;
@@ -33,26 +29,30 @@ onMounted(async () => {
   });
 });
 
-async function onDropBoardCard() {
+async function onDragEnd() {
   handleDragEnd();
-  const boardsPlaces = boards.value.map((board, index) => ({boardId: board.id, place: index+1}));
-  await request("/change_board_order", "POST", {changes: boardsPlaces});
+  const boardsPlaces = boards.value.map((board, index) => ({
+    boardId: board.id,
+    place: index + 1,
+  }));
+  await request("/change_board_order", "POST", { changes: boardsPlaces });
 }
-
 
 function onDragOver(index: number) {
   boards.value = handleDragOver(boards.value, index);
 }
 
 async function onCreateNewBoard() {
-  const boardId = (await request("/create_boards", 'POST', {
-    "boardsToCreate": [
-      {
-        "name": "New board",
-        "topicIds": []
-      }
-    ]
-  })).ids[0];
+  const boardId = (
+    await request("/create_boards", "POST", {
+      boardsToCreate: [
+        {
+          name: "New board",
+          topicIds: [],
+        },
+      ],
+    })
+  ).ids[0];
   await router.push(`/board/${boardId}`);
 }
 </script>
@@ -68,16 +68,16 @@ async function onCreateNewBoard() {
 
     <TransitionGroup name="list" tag="div" class="boards-list">
       <BoardCard
-          v-for="(board, index) in boards"
-          :key="board.id"
-          :id="board.id"
-          :name="board.name"
-          draggable="true"
-          @dragstart="handleDragStart($event, index)"
-          @dragover.prevent="onDragOver(index)"
-          @dragend="onDropBoardCard"
-          class="card"
-          :class="{ dragging: draggedIndex === index }"
+        v-for="(board, index) in boards"
+        :key="board.id"
+        :id="board.id"
+        :name="board.name"
+        draggable="true"
+        @dragstart="handleDragStart($event, index)"
+        @dragover.prevent="onDragOver(index)"
+        @dragend="onDragEnd"
+        class="card"
+        :class="{ dragging: draggedIndex === index }"
       />
     </TransitionGroup>
   </section>
@@ -105,7 +105,7 @@ async function onCreateNewBoard() {
   grid-template-columns: repeat(auto-fit, minmax(12em, 1fr));
   margin-top: 2em;
   max-width: calc(
-      16em * v-bind("boards.length") + 1em * (v-bind("boards.length") - 1)
+    16em * v-bind("boards.length") + 1em * (v-bind("boards.length") - 1)
   );
 }
 

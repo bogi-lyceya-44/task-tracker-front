@@ -1,7 +1,7 @@
 <script lang="ts">
 import { defineComponent, ref } from "vue";
 
-import {useDragAndDrop} from "../composables/useDragAndDrop.ts";
+import { useDragAndDrop } from "../composables/useDragAndDrop.ts";
 import { topicsList } from "../dataMock.ts";
 import type { TaskCardType } from "../types.ts";
 import BaseIcon from "./BaseIcon.vue";
@@ -15,7 +15,7 @@ interface Topic {
 
 export default defineComponent({
   name: "TopicsList",
-  components: {BaseIcon, TopicColumn},
+  components: { BaseIcon, TopicColumn },
   setup() {
     const topics = ref<Topic[]>(topicsList);
     const {
