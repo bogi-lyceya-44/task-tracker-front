@@ -1,61 +1,58 @@
-<script lang="ts">
-import { defineComponent } from "vue";
+<script setup lang="ts">
+import {onBeforeUnmount, onMounted, ref, useTemplateRef} from "vue";
 
 import BaseIcon from "./BaseIcon.vue";
 
-export default defineComponent({
-  name: "ProfilePreview",
-  components: { BaseIcon },
-  data() {
-    return {
-      isOpen: false,
-    };
-  },
-  methods: {
-    handleClickOutside(event: MouseEvent) {
-      const wrapper = this.$refs.wrapper as HTMLElement;
-      if (this.isOpen && wrapper && !wrapper.contains(event.target as Node)) {
-        this.isOpen = false;
-      }
-    },
-    openProfilePreview() {
-      this.isOpen = !this.isOpen;
-    },
-  },
-  beforeUnmount() {
-    document.removeEventListener("click", this.handleClickOutside);
-  },
-  mounted() {
-    document.addEventListener("click", this.handleClickOutside);
-  },
-});
+const wrapper = useTemplateRef<HTMLDivElement>('wrapper');
+const isOpen = ref(false);
+
+
+function handleClickOutside(event: MouseEvent) {
+  if (isOpen.value && wrapper.value && !wrapper.value.contains(event.target as Node)) {
+    isOpen.value = false;
+  }
+}
+
+function openProfilePreview() {
+  isOpen.value = !isOpen.value;
+}
+
+onMounted(() => {
+  document.addEventListener("click", handleClickOutside);
+})
+onBeforeUnmount(() => {
+  document.removeEventListener("click", handleClickOutside);
+})
 </script>
 
 <template>
   <div class="profile-wrapper" ref="wrapper">
     <button class="profile-preview" @click="openProfilePreview">
-      <img class="avatar" src="../assets/images/avatar.jpg" alt="avatar" />
+      <img class="avatar" src="../assets/images/avatar.jpg" alt="avatar"/>
     </button>
     <div class="menu" :class="{ open: isOpen }">
       <div class="account-info">
         <img
-          class="account-avatar"
-          src="../assets/images/avatar.jpg"
-          alt="avatar"
+            class="account-avatar"
+            src="../assets/images/avatar.jpg"
+            alt="avatar"
         />
         <div class="account-content">
           <span class="account-nickname">Emo Princess Shine</span>
           <span class="account-email">petr.ahtimirov@gmail.com</span>
         </div>
       </div>
-      <hr class="hr" />
+      <hr class="hr"/>
       <div class="menu-list">
         <RouterLink class="menu-item" to="/profile" @click="isOpen = false">
           <span>Profile</span>
         </RouterLink>
+        <button class="menu-item" @click="isOpen = false">
+          <span>Settings</span>
+        </button>
         <button class="menu-item danger" @click="isOpen = false">
           <span>Sign out</span>
-          <BaseIcon class="menu-item-icon" name="log_out" alt="Log out" />
+          <BaseIcon class="menu-item-icon" name="log_out" alt="Log out"/>
         </button>
       </div>
     </div>
@@ -80,7 +77,7 @@ export default defineComponent({
 }
 
 .avatar {
-  border: 1px solid var(--border-light-color);
+  border: 1px solid var(--border-color);
   border-radius: 2em;
   height: 2em;
   width: 2em;
@@ -88,9 +85,9 @@ export default defineComponent({
 
 .menu {
   background-color: var(--background-color);
-  border: 1px solid var(--border-light-color);
+  border: 1px solid var(--border-color);
   border-radius: 1em;
-  box-shadow: 0 0.4em 1em 0 var(--border-light-color);
+  box-shadow: 0 0.4em 1em 0 #dbdbdb;
   opacity: 0;
   padding: 0.5em;
   pointer-events: none;
@@ -98,9 +95,8 @@ export default defineComponent({
   right: 0;
   top: 3em;
   transform: translateY(-0.5em);
-  transition:
-    opacity 0.3s ease,
-    transform 0.3s ease;
+  transition: opacity 0.3s ease,
+  transform 0.3s ease;
 }
 
 .menu.open {
@@ -116,7 +112,7 @@ export default defineComponent({
 }
 
 .account-avatar {
-  border: 1px solid var(--border-light-color);
+  border: 1px solid var(--border-color);
   border-radius: 2em;
   height: 3.2em;
   width: 3.2em;
@@ -135,7 +131,7 @@ export default defineComponent({
 }
 
 .account-email {
-  color: var(--text-light-color);
+  color: var(--text-color);
   font-size: 0.8em;
   max-width: 12em;
   overflow: hidden;
@@ -143,7 +139,7 @@ export default defineComponent({
 }
 
 .hr {
-  background-color: var(--border-light-color);
+  background-color: var(--border-color);
   border: none;
   height: 1px;
 }
@@ -176,7 +172,7 @@ export default defineComponent({
 }
 
 .menu-item:hover {
-  background-color: var(--background-focus-color);
+  background-color: var(--background-second-color);
 }
 
 .menu-item.danger:hover {

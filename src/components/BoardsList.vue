@@ -1,11 +1,10 @@
 <script setup lang="ts">
 import { onMounted, ref } from "vue";
-import { useRouter } from "vue-router";
 
 import { useDragAndDrop } from "../composables/useDragAndDrop.ts";
 import { request } from "../utils/httpRequest.ts";
-import BaseIcon from "./BaseIcon.vue";
 import BoardCard from "./BoardCard.vue";
+import BoardsListPanel from "./BoardsListPanel.vue";
 
 interface Board {
   id: string;
@@ -13,7 +12,6 @@ interface Board {
 }
 
 const boards = ref<Board[]>([]);
-const router = useRouter();
 
 const { draggedIndex, handleDragStart, handleDragOver, handleDragEnd } =
   useDragAndDrop<Board>();
@@ -42,30 +40,11 @@ function onDragOver(index: number) {
   boards.value = handleDragOver(boards.value, index);
 }
 
-async function onCreateNewBoard() {
-  const boardId = (
-    await request("/create_boards", "POST", {
-      boardsToCreate: [
-        {
-          name: "New board",
-          topicIds: [],
-        },
-      ],
-    })
-  ).ids[0];
-  await router.push(`/board/${boardId}`);
-}
 </script>
 
 <template>
   <section class="boards-list-section">
-    <div class="panel">
-      <h1 class="title">Boards List</h1>
-      <button class="btn" @click="onCreateNewBoard">
-        <BaseIcon name="plus" class="button-image" alt="plus" /> New board
-      </button>
-    </div>
-
+    <BoardsListPanel />
     <TransitionGroup name="list" tag="div" class="boards-list">
       <BoardCard
         v-for="(board, index) in boards"
@@ -88,17 +67,6 @@ async function onCreateNewBoard() {
   padding: 1.8em 2em;
 }
 
-.panel {
-  display: flex;
-  justify-content: space-between;
-}
-
-.title {
-  font-size: 2.25em;
-  font-weight: 500;
-  margin: 0;
-}
-
 .boards-list {
   display: grid;
   gap: 1em;
@@ -107,12 +75,6 @@ async function onCreateNewBoard() {
   max-width: calc(
     16em * v-bind("boards.length") + 1em * (v-bind("boards.length") - 1)
   );
-}
-
-.button-image {
-  color: #fff;
-  height: 0.9em;
-  width: 0.9em;
 }
 
 .card {

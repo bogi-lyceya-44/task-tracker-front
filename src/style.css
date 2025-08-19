@@ -1,10 +1,8 @@
 :root {
   font-size: 16px;
 
-  --text-color: #131313;
   --text-light-color: #787486;
 
-  --background-color: #ffffff;
   --background-focus-color: #f2f2f2;
   --background-second-color: #f7f6fa;
   --border-light-color: #dbdbdb;
@@ -14,6 +12,15 @@
 
   --btn-background-color: #131313;
   --btn-hover-background-color: #383737;
+
+  /* actual vars */
+  --background-color: #FFFFFF; /* #252B37 */
+  --second-background-color: #EAECF5;
+  --text-color: #101323; /* #F8F9FC */
+  --second-text-color: #717BBC; /* #A4A7AE */
+  --border-color: #C8CCE5; /* #414651 */
+  --primary-color: #363F72; /* #535862 */
+  --primary-hover-color: #565F91;
 }
 
 * {
@@ -43,15 +50,15 @@ button {
   font-size: 1em;
   font-weight: 400;
   border: none;
-  color: #fff;
-  background-color: var(--btn-background-color);
+  color: var(--background-color);
+  background-color: var(--primary-color);
   border-radius: 0.75em;
   cursor: pointer;
   transition: 0.3s;
 }
 
 .btn:hover {
-  background-color: var(--btn-hover-background-color);
+  background-color: var(--primary-hover-color);
 }
 
 @media (max-width: 768px) {
