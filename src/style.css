@@ -21,6 +21,7 @@
   --border-color: #C8CCE5; /* #414651 */
   --primary-color: #363F72; /* #535862 */
   --primary-hover-color: #565F91;
+  --primary-second-hover-color: rgba(200, 204, 229, 0.6);
 }
 
 * {

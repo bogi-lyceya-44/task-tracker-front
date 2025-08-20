@@ -156,6 +156,7 @@ function switchMode () {
   border-radius: 0.5em;
   overflow: hidden;
   background-color: var(--second-background-color);
+  transition: .3s;
 }
 
 .mode {
@@ -163,11 +164,19 @@ function switchMode () {
   border-radius: 0.5em;
   background-color: var(--second-background-color);
   color: var(--primary-color);
-  transition: .2s;
+  transition: .3s;
 }
 
 .mode.active {
   background-color: var(--primary-color);
   color: #fff;
+}
+
+.toggle-mode:hover > .mode.active {
+  background-color: var(--primary-hover-color);
+}
+
+.toggle-mode:hover,  .toggle-mode:hover > .mode {
+  background-color: var(--border-color);
 }
 </style>

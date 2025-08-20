@@ -70,11 +70,17 @@ export default defineComponent({
 <style scoped>
 .topics-list-section {
   padding: 0 2em 1.8em;
+  flex: 1;
+  display: flex;
 }
 
 .topics-list-wrapper {
   display: flex;
   gap: 2em;
+  overflow-x: scroll;
+  padding-bottom: 1em;
+  min-height: 100%;
+  flex: 1;
 }
 
 .topics-list {
@@ -84,6 +90,7 @@ export default defineComponent({
 
 .topic {
   transition: 0.3s;
+  height: fit-content;
 }
 
 .dragging {
@@ -111,6 +118,7 @@ export default defineComponent({
   padding: 0.6em 0.8em;
   transition: 0.3s;
   width: 16em;
+  min-width: 10em;
 }
 
 .add-topic:hover {

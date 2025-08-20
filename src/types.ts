@@ -1,6 +1,7 @@
 export type TaskCardType = {
   id: string;
   title: string;
+  description: string;
 };
 
 export type BodyType = {
