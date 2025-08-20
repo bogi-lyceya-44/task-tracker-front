@@ -1,14 +1,17 @@
 <script setup lang="ts">
-import {onBeforeUnmount, onMounted, ref, useTemplateRef} from "vue";
+import { onBeforeUnmount, onMounted, ref, useTemplateRef } from "vue";
 
 import BaseIcon from "./BaseIcon.vue";
 
-const wrapper = useTemplateRef<HTMLDivElement>('wrapper');
+const wrapper = useTemplateRef<HTMLDivElement>("wrapper");
 const isOpen = ref(false);
 
-
 function handleClickOutside(event: MouseEvent) {
-  if (isOpen.value && wrapper.value && !wrapper.value.contains(event.target as Node)) {
+  if (
+    isOpen.value &&
+    wrapper.value &&
+    !wrapper.value.contains(event.target as Node)
+  ) {
     isOpen.value = false;
   }
 }
@@ -19,30 +22,30 @@ function openProfilePreview() {
 
 onMounted(() => {
   document.addEventListener("click", handleClickOutside);
-})
+});
 onBeforeUnmount(() => {
   document.removeEventListener("click", handleClickOutside);
-})
+});
 </script>
 
 <template>
   <div class="profile-wrapper" ref="wrapper">
     <button class="profile-preview" @click="openProfilePreview">
-      <img class="avatar" src="../assets/images/avatar.jpg" alt="avatar"/>
+      <img class="avatar" src="../assets/images/avatar.jpg" alt="avatar" />
     </button>
     <div class="menu" :class="{ open: isOpen }">
       <div class="account-info">
         <img
-            class="account-avatar"
-            src="../assets/images/avatar.jpg"
-            alt="avatar"
+          class="account-avatar"
+          src="../assets/images/avatar.jpg"
+          alt="avatar"
         />
         <div class="account-content">
           <span class="account-nickname">Emo Princess Shine</span>
           <span class="account-email">petr.ahtimirov@gmail.com</span>
         </div>
       </div>
-      <hr class="hr"/>
+      <hr class="hr" />
       <div class="menu-list">
         <RouterLink class="menu-item" to="/profile" @click="isOpen = false">
           <span>Profile</span>
@@ -52,7 +55,7 @@ onBeforeUnmount(() => {
         </button>
         <button class="menu-item danger" @click="isOpen = false">
           <span>Sign out</span>
-          <BaseIcon class="menu-item-icon" name="log_out" alt="Log out"/>
+          <BaseIcon class="menu-item-icon" name="log_out" alt="Log out" />
         </button>
       </div>
     </div>
@@ -88,8 +91,9 @@ onBeforeUnmount(() => {
   right: 0;
   top: 3em;
   transform: translateY(-0.5em);
-  transition: opacity 0.3s ease,
-  transform 0.3s ease;
+  transition:
+    opacity 0.3s ease,
+    transform 0.3s ease;
 }
 
 .menu.open {

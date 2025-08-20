@@ -40,41 +40,33 @@ function onDragStart(event: DragEvent) {
 
 <template>
   <div
-      class="topic"
-      draggable="true"
-      @dragstart="onDragStart"
-      @dragover.prevent
+    class="topic"
+    draggable="true"
+    @dragstart="onDragStart"
+    @dragover.prevent
   >
     <div
-        class="topic-top"
-        @mousedown="onMouseDown"
-        @mouseup="onMouseUp"
-        @mouseleave="onMouseLeave"
+      class="topic-top"
+      @mousedown="onMouseDown"
+      @mouseup="onMouseUp"
+      @mouseleave="onMouseLeave"
     >
       {{ name }}
       <button class="more-button">
-        <BaseIcon
-            name="more"
-            height="16px"
-            width="16px"
-        />
+        <BaseIcon name="more" height="16px" width="16px" />
       </button>
     </div>
     <div class="cards-list">
       <TaskCard
-          v-for="card in cards"
-          :key="card.id"
-          :title="card.title"
-          :description="card.description"
-          draggable="true"
+        v-for="card in cards"
+        :key="card.id"
+        :title="card.title"
+        :description="card.description"
+        draggable="true"
       />
     </div>
     <button class="create-card-button">
-      <BaseIcon
-          name="plus"
-          height="16px"
-          width="16px"
-      />
+      <BaseIcon name="plus" height="16px" width="16px" />
       <span class="create-card-text">Add Card</span>
     </button>
   </div>
@@ -83,21 +75,21 @@ function onDragStart(event: DragEvent) {
 <style scoped>
 .topic {
   background-color: var(--background-second-color);
-  box-shadow: 0 2px 2px -1px #C8CCE5;
   border-radius: 1em;
-  width: 16em;
+  box-shadow: 0 2px 2px -1px #c8cce5;
   min-width: 16em;
   padding: 0.5em;
+  width: 16em;
 }
 
 .topic-top {
-  display: flex;
-  justify-content: space-between;
   align-items: center;
   cursor: pointer;
+  display: flex;
   font-size: 1.125em;
   font-weight: 500;
-  padding: 0 0 .625em .375em;
+  justify-content: space-between;
+  padding: 0 0 0.625em 0.375em;
 }
 
 .cards-list {
@@ -107,12 +99,12 @@ function onDragStart(event: DragEvent) {
 }
 
 .more-button {
-  padding: 0.5em;
-  border-radius: 0.5em;
-  border: none;
   background-color: transparent;
+  border: none;
+  border-radius: 0.5em;
   cursor: pointer;
-  transition: .3s;
+  padding: 0.5em;
+  transition: 0.3s;
 }
 
 .more-button:hover {
@@ -120,23 +112,23 @@ function onDragStart(event: DragEvent) {
 }
 
 .create-card-button {
-  display: flex;
   align-items: center;
-  border: none;
-  width: 100%;
-  margin-top: 0.625em;
-  border-radius: 0.75em;
   background-color: transparent;
-  gap: 1em;
-  padding: 0.75em 1em;
+  border: none;
+  border-radius: 0.75em;
   color: var(--primary-color);
   cursor: pointer;
-  transition: .3s;
+  display: flex;
+  gap: 1em;
+  margin-top: 0.625em;
+  padding: 0.75em 1em;
+  transition: 0.3s;
+  width: 100%;
 }
 
 .create-card-text {
-  font-weight: 500;
   font-size: 1.2em;
+  font-weight: 500;
   line-height: 16px;
 }
 

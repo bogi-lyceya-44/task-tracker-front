@@ -14,13 +14,13 @@
   --btn-hover-background-color: #383737;
 
   /* actual vars */
-  --background-color: #FFFFFF; /* #252B37 */
-  --second-background-color: #EAECF5;
+  --background-color: #ffffff; /* #252B37 */
+  --second-background-color: #eaecf5;
   --text-color: #101323; /* #F8F9FC */
-  --second-text-color: #717BBC; /* #A4A7AE */
-  --border-color: #C8CCE5; /* #414651 */
-  --primary-color: #363F72; /* #535862 */
-  --primary-hover-color: #565F91;
+  --second-text-color: #717bbc; /* #A4A7AE */
+  --border-color: #c8cce5; /* #414651 */
+  --primary-color: #363f72; /* #535862 */
+  --primary-hover-color: #565f91;
   --primary-second-hover-color: rgba(200, 204, 229, 0.6);
 }
 

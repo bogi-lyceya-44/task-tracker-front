@@ -1,16 +1,14 @@
 <script setup lang="ts">
-defineProps(
-    {
-      id: {
-        required: true,
-        type: String
-      },
-      name: {
-        required: true,
-        type: String,
-      }
-    }
-)
+defineProps({
+  id: {
+    required: true,
+    type: String,
+  },
+  name: {
+    required: true,
+    type: String,
+  },
+});
 </script>
 
 <template>
@@ -33,17 +31,17 @@ defineProps(
   background-color: #e8eefe;
   border: 1px solid transparent;
   border-radius: 1em;
+  box-shadow: 0 2px 2px -1px #c8cce5;
   display: flex;
   flex-direction: column;
   height: 10em;
   justify-content: flex-end;
   padding: 0.6em;
   transition: 0.3s;
-  box-shadow: 0 2px 2px -1px #C8CCE5;
 }
 
 .board-card:hover {
-  box-shadow: 0 4px 6px 0 #C8CCE5;
+  box-shadow: 0 4px 6px 0 #c8cce5;
 }
 
 .dragging > .board-card {

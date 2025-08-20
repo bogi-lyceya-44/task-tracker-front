@@ -39,7 +39,6 @@ async function onDragEnd() {
 function onDragOver(index: number) {
   boards.value = handleDragOver(boards.value, index);
 }
-
 </script>
 
 <template>

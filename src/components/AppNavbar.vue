@@ -5,17 +5,17 @@ import ProfilePreview from "./ProfilePreview.vue";
 <template>
   <div class="navbar">
     <RouterLink class="logo" to="/"> task tracker</RouterLink>
-    <ProfilePreview/>
+    <ProfilePreview />
   </div>
 </template>
 
 <style scoped>
 .navbar {
-  display: flex;
   align-items: center;
   border-bottom: 1px solid var(--border-color);
-  padding: 0.5em 2em;
+  display: flex;
   justify-content: space-between;
+  padding: 0.5em 2em;
 }
 
 .logo {

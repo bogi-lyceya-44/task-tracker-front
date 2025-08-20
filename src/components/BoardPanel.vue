@@ -1,12 +1,12 @@
 <script lang="ts" setup>
 import BaseIcon from "./BaseIcon.vue";
 
-const mode = defineModel('mode', {required: true});
+const mode = defineModel("mode", { required: true });
 const name = defineModel("name", { required: true });
 
-function switchMode () {
-  if (mode.value === 'topics') mode.value = 'calendar';
-  else mode.value = 'topics';
+function switchMode() {
+  if (mode.value === "topics") mode.value = "calendar";
+  else mode.value = "topics";
 }
 </script>
 
@@ -28,39 +28,27 @@ function switchMode () {
       </div>
       <div class="controllers">
         <div class="collaborators">
-          <img class="avatar" src="../assets/images/avatar.jpg" alt="avatar"/>
-          <img class="avatar" src="../assets/images/avatar.jpg" alt="avatar"/>
-          <img class="avatar" src="../assets/images/avatar.jpg" alt="avatar"/>
+          <img class="avatar" src="../assets/images/avatar.jpg" alt="avatar" />
+          <img class="avatar" src="../assets/images/avatar.jpg" alt="avatar" />
+          <img class="avatar" src="../assets/images/avatar.jpg" alt="avatar" />
           <div class="avatar no-image">+2</div>
         </div>
         <button class="btn">
-          <BaseIcon
-              name="settings"
-              height="18px"
-              width="18px"
-          />
+          <BaseIcon name="settings" height="18px" width="18px" />
           Settings
         </button>
         <div class="divider"></div>
         <button
-            class="toggle-mode"
-            :aria-checked="mode === 'topics'"
-            role="switch"
-            @click="switchMode"
+          class="toggle-mode"
+          :aria-checked="mode === 'topics'"
+          role="switch"
+          @click="switchMode"
         >
-          <span class="mode" :class="{active: mode === 'topics'}">
-            <BaseIcon
-                name="topics_grid"
-                height="20px"
-                width="20px"
-            />
+          <span class="mode" :class="{ active: mode === 'topics' }">
+            <BaseIcon name="topics_grid" height="20px" width="20px" />
           </span>
-          <span class="mode" :class="{active: mode === 'calendar'}">
-            <BaseIcon
-                name="calendar"
-                height="20px"
-                width="20px"
-            />
+          <span class="mode" :class="{ active: mode === 'calendar' }">
+            <BaseIcon name="calendar" height="20px" width="20px" />
           </span>
         </button>
       </div>
@@ -70,7 +58,7 @@ function switchMode () {
 
 <style scoped>
 .board-panel-section {
-  padding: 2em 2em;
+  padding: 2em;
 }
 
 .board-panel {
@@ -86,8 +74,8 @@ function switchMode () {
   border-radius: 0.3em;
   font-family: Avenir, sans-serif;
   font-size: 1.875em;
-  line-height: 1em;
   font-weight: 500;
+  line-height: 1em;
   margin: 0;
   padding: 0.16em;
 }
@@ -126,8 +114,8 @@ function switchMode () {
 }
 
 .controllers {
-  display: flex;
   align-items: center;
+  display: flex;
   gap: 1.75em;
 }
 
@@ -147,24 +135,24 @@ function switchMode () {
 }
 
 .toggle-mode {
-  display: flex;
-  cursor: pointer;
-  gap: 2px;
-  margin: 0;
-  padding: 0;
+  background-color: var(--second-background-color);
   border: none;
   border-radius: 0.5em;
+  cursor: pointer;
+  display: flex;
+  gap: 2px;
+  margin: 0;
   overflow: hidden;
-  background-color: var(--second-background-color);
-  transition: .3s;
+  padding: 0;
+  transition: 0.3s;
 }
 
 .mode {
-  padding: 0.5em;
-  border-radius: 0.5em;
   background-color: var(--second-background-color);
+  border-radius: 0.5em;
   color: var(--primary-color);
-  transition: .3s;
+  padding: 0.5em;
+  transition: 0.3s;
 }
 
 .mode.active {
@@ -176,7 +164,8 @@ function switchMode () {
   background-color: var(--primary-hover-color);
 }
 
-.toggle-mode:hover,  .toggle-mode:hover > .mode {
+.toggle-mode:hover,
+.toggle-mode:hover > .mode {
   background-color: var(--border-color);
 }
 </style>

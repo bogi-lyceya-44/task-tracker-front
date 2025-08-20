@@ -1,19 +1,18 @@
 <script setup lang="ts">
-
-import {router} from "../router.ts";
-import {request} from "../utils/httpRequest.ts";
+import { router } from "../router.ts";
+import { request } from "../utils/httpRequest.ts";
 import BaseIcon from "./BaseIcon.vue";
 
 async function onCreateNewBoard() {
   const boardId = (
-      await request("/create_boards", "POST", {
-        boardsToCreate: [
-          {
-            name: "New board",
-            topicIds: [],
-          },
-        ],
-      })
+    await request("/create_boards", "POST", {
+      boardsToCreate: [
+        {
+          name: "New board",
+          topicIds: [],
+        },
+      ],
+    })
   ).ids[0];
   await router.push(`/board/${boardId}`);
 }
@@ -29,7 +28,6 @@ async function onCreateNewBoard() {
 </template>
 
 <style scoped>
-
 .panel {
   display: flex;
   justify-content: space-between;
@@ -45,6 +43,4 @@ async function onCreateNewBoard() {
   height: 0.9em;
   width: 0.9em;
 }
-
-
 </style>
