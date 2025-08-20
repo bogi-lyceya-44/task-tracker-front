@@ -1,17 +1,10 @@
-<script lang="ts">
-import { defineComponent } from "vue";
-
+<script setup lang="ts">
 import ProfilePreview from "./ProfilePreview.vue";
-
-export default defineComponent({
-  name: "AppNavbar",
-  components: { ProfilePreview },
-});
 </script>
 
 <template>
   <div class="navbar">
-    <RouterLink class="logo" to="/"> task tracker </RouterLink>
+    <RouterLink class="logo" to="/"> task tracker</RouterLink>
     <ProfilePreview />
   </div>
 </template>
@@ -19,11 +12,10 @@ export default defineComponent({
 <style scoped>
 .navbar {
   align-items: center;
-  border-bottom: 1px solid var(--border-light-color);
+  border-bottom: 1px solid var(--border-color);
   display: flex;
-  height: 3.2em;
   justify-content: space-between;
-  padding: 0 2em;
+  padding: 0.5em 2em;
 }
 
 .logo {

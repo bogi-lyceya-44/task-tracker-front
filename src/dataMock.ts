@@ -12,7 +12,12 @@ const topicsList = [
     id: "0",
     name: "topic 1",
     cards: [
-      { id: "0", title: "card 1 title" },
+      {
+        id: "0",
+        title: "card 1 title",
+        description:
+          "Re-usable components built using Radix UI and Tailwind CSS",
+      },
       { id: "1", title: "card 2 title" },
       { id: "2", title: "card 3 title" },
     ],

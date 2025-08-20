@@ -1,10 +1,8 @@
 :root {
   font-size: 16px;
 
-  --text-color: #131313;
   --text-light-color: #787486;
 
-  --background-color: #ffffff;
   --background-focus-color: #f2f2f2;
   --background-second-color: #f7f6fa;
   --border-light-color: #dbdbdb;
@@ -14,6 +12,16 @@
 
   --btn-background-color: #131313;
   --btn-hover-background-color: #383737;
+
+  /* actual vars */
+  --background-color: #ffffff; /* #252B37 */
+  --second-background-color: #eaecf5;
+  --text-color: #101323; /* #F8F9FC */
+  --second-text-color: #717bbc; /* #A4A7AE */
+  --border-color: #c8cce5; /* #414651 */
+  --primary-color: #363f72; /* #535862 */
+  --primary-hover-color: #565f91;
+  --primary-second-hover-color: rgba(200, 204, 229, 0.6);
 }
 
 * {
@@ -40,18 +48,33 @@ button {
   display: flex;
   align-items: center;
   gap: 0.5em;
-  font-size: 1em;
+  font-size: 0.925em;
   font-weight: 400;
   border: none;
-  color: #fff;
-  background-color: var(--btn-background-color);
+  color: var(--background-color);
+  background-color: var(--primary-color);
   border-radius: 0.75em;
   cursor: pointer;
   transition: 0.3s;
 }
 
 .btn:hover {
-  background-color: var(--btn-hover-background-color);
+  background-color: var(--primary-hover-color);
+}
+
+.avatar {
+  border: 1px solid var(--border-color);
+  border-radius: 2em;
+  height: 2.25em;
+  width: 2.25em;
+}
+
+.avatar.no-image {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--border-color);
+  font-weight: 500;
 }
 
 @media (max-width: 768px) {

@@ -69,12 +69,18 @@ export default defineComponent({
 
 <style scoped>
 .topics-list-section {
+  display: flex;
+  flex: 1;
   padding: 0 2em 1.8em;
 }
 
 .topics-list-wrapper {
   display: flex;
+  flex: 1;
   gap: 2em;
+  min-height: 100%;
+  overflow-x: scroll;
+  padding-bottom: 1em;
 }
 
 .topics-list {
@@ -83,6 +89,7 @@ export default defineComponent({
 }
 
 .topic {
+  height: fit-content;
   transition: 0.3s;
 }
 
@@ -108,6 +115,7 @@ export default defineComponent({
   font-size: 1em;
   gap: 0.8em;
   height: fit-content;
+  min-width: 10em;
   padding: 0.6em 0.8em;
   transition: 0.3s;
   width: 16em;

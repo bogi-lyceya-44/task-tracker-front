@@ -1,17 +1,12 @@
-<script lang="ts">
-import { defineComponent } from "vue";
-
-export default defineComponent({
-  name: "BoardCard",
-  props: {
-    id: {
-      required: true,
-      type: String,
-    },
-    name: {
-      required: true,
-      type: String,
-    },
+<script setup lang="ts">
+defineProps({
+  id: {
+    required: true,
+    type: String,
+  },
+  name: {
+    required: true,
+    type: String,
   },
 });
 </script>
@@ -34,8 +29,9 @@ export default defineComponent({
 
 .board-card {
   background-color: #e8eefe;
-  border: 1px solid var(--border-light-color);
+  border: 1px solid transparent;
   border-radius: 1em;
+  box-shadow: 0 2px 2px -1px #c8cce5;
   display: flex;
   flex-direction: column;
   height: 10em;
@@ -45,7 +41,7 @@ export default defineComponent({
 }
 
 .board-card:hover {
-  box-shadow: 0 0.4em 1em 0 var(--border-light-color);
+  box-shadow: 0 4px 6px 0 #c8cce5;
 }
 
 .dragging > .board-card {
