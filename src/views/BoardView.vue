@@ -4,9 +4,11 @@ import { useRoute } from "vue-router";
 
 import BoardPanel from "../components/BoardPanel.vue";
 import TopicsList from "../components/TopicsList.vue";
+import type {BoardMode} from "../types.ts";
 import { request } from "../utils/httpRequest.ts";
 
 const boardName = ref("");
+const boardMode = ref<BoardMode>("topics");
 const boardId = useRoute().params.id;
 
 onMounted(async () => {
@@ -27,14 +29,16 @@ watch(boardName, async (boardName, prevBoardName) => {
 
 <template>
   <div class="board-wrapper">
-    <BoardPanel v-model:name="boardName" />
-    <TopicsList />
+    <BoardPanel
+        v-model:name="boardName"
+        v-model:mode="boardMode"
+    />
+    <TopicsList v-if="boardMode === 'topics'" />
   </div>
 </template>
 
 <style scoped>
 .board-wrapper {
-  background-color: #e8eefe;
   display: flex;
   flex-direction: column;
 }

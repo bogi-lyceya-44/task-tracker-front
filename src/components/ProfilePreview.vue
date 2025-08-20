@@ -76,13 +76,6 @@ onBeforeUnmount(() => {
   padding: 0;
 }
 
-.avatar {
-  border: 1px solid var(--border-color);
-  border-radius: 2em;
-  height: 2em;
-  width: 2em;
-}
-
 .menu {
   background-color: var(--background-color);
   border: 1px solid var(--border-color);

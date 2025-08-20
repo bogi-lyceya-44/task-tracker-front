@@ -47,7 +47,7 @@ button {
   display: flex;
   align-items: center;
   gap: 0.5em;
-  font-size: 1em;
+  font-size: 0.925em;
   font-weight: 400;
   border: none;
   color: var(--background-color);
@@ -59,6 +59,21 @@ button {
 
 .btn:hover {
   background-color: var(--primary-hover-color);
+}
+
+.avatar {
+  border: 1px solid var(--border-color);
+  border-radius: 2em;
+  height: 2.25em;
+  width: 2.25em;
+}
+
+.avatar.no-image {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--border-color);
+  font-weight: 500;
 }
 
 @media (max-width: 768px) {
