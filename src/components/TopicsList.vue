@@ -1,10 +1,10 @@
-<script lang="ts">
-import { defineComponent, ref } from "vue";
+<script setup lang="ts">
+import { ref } from "vue";
 
-import { useDragAndDrop } from "../composables/useDragAndDrop.ts";
 import { topicsList } from "../dataMock.ts";
 import type { TaskCardType } from "../types.ts";
 import BaseIcon from "./BaseIcon.vue";
+import DraggableComponent from "./DraggableComponent.vue";
 import TopicColumn from "./TopicColumn.vue";
 
 interface Topic {
@@ -13,51 +13,31 @@ interface Topic {
   cards: TaskCardType[];
 }
 
-export default defineComponent({
-  name: "TopicsList",
-  components: { BaseIcon, TopicColumn },
-  setup() {
-    const topics = ref<Topic[]>(topicsList);
-    const {
-      draggedIndex,
-      handleDragStart,
-      handleDragOver,
-      handleDrop,
-      handleDragEnd,
-    } = useDragAndDrop<Topic>();
+const topics = ref<Topic[]>(topicsList);
 
-    function onDragOver(index: number) {
-      topics.value = handleDragOver(topics.value, index);
-    }
-
-    return {
-      topics,
-      draggedIndex,
-      handleDragStart,
-      onDragOver,
-      handleDrop,
-      handleDragEnd,
-    };
-  },
-});
+function onAfterDragOver(newList: Topic[]) {
+  topics.value = newList;
+}
 </script>
 
 <template>
   <section class="topics-list-section">
     <div class="topics-list-wrapper">
       <TransitionGroup name="list" tag="div" class="topics-list">
-        <TopicColumn
+        <DraggableComponent
           v-for="(topic, index) in topics"
           :key="topic.id"
-          :cards="topic.cards"
-          :name="topic.name"
-          @dragstart="handleDragStart($event, index, 'top')"
-          @dragover.prevent="onDragOver(index)"
-          @drop="handleDrop"
-          @dragend="handleDragEnd"
-          class="topic"
-          :class="{ dragging: draggedIndex === index }"
-        />
+          :full-list="topics"
+          :index="index"
+          :on-after-drag-over="onAfterDragOver"
+          pos="top"
+        >
+          <TopicColumn
+            :cards="topic.cards"
+            :name="topic.name"
+            class="topic"
+          />
+        </DraggableComponent>
       </TransitionGroup>
       <button class="add-topic">
         <BaseIcon class="add-topic-icon" name="plus" alt="" />
@@ -91,18 +71,6 @@ export default defineComponent({
 .topic {
   height: fit-content;
   transition: 0.3s;
-}
-
-.dragging {
-  color: var(--text-light-color);
-  opacity: 0.4;
-  overflow: hidden;
-  position: relative;
-}
-
-.list-move {
-  pointer-events: none;
-  transition: all 0.4s ease;
 }
 
 .add-topic {

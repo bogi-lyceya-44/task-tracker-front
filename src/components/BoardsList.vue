@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import { onMounted, ref } from "vue";
 
-import { useDragAndDrop } from "../composables/useDragAndDrop.ts";
 import { request } from "../utils/httpRequest.ts";
 import BoardCard from "./BoardCard.vue";
 import BoardsListPanel from "./BoardsListPanel.vue";
+import DraggableComponent from "./DraggableComponent.vue";
 
 interface Board {
   id: string;
@@ -12,9 +12,6 @@ interface Board {
 }
 
 const boards = ref<Board[]>([]);
-
-const { draggedIndex, handleDragStart, handleDragOver, handleDragEnd } =
-  useDragAndDrop<Board>();
 
 onMounted(async () => {
   const boardsRes = (await request("/get_all_boards", "POST", {})).boards;
@@ -27,8 +24,7 @@ onMounted(async () => {
   });
 });
 
-async function onDragEnd() {
-  handleDragEnd();
+async function afterDragEnd() {
   const boardsPlaces = boards.value.map((board, index) => ({
     boardId: board.id,
     place: index + 1,
@@ -36,8 +32,8 @@ async function onDragEnd() {
   await request("/change_board_order", "POST", { changes: boardsPlaces });
 }
 
-function onDragOver(index: number) {
-  boards.value = handleDragOver(boards.value, index);
+function afterDragOver(newList: Board[]) {
+  boards.value = newList;
 }
 </script>
 
@@ -45,18 +41,20 @@ function onDragOver(index: number) {
   <section class="boards-list-section">
     <BoardsListPanel />
     <TransitionGroup name="list" tag="div" class="boards-list">
-      <BoardCard
-        v-for="(board, index) in boards"
+      <DraggableComponent
+        v-for="(board, index) of boards"
         :key="board.id"
-        :id="board.id"
-        :name="board.name"
-        draggable="true"
-        @dragstart="handleDragStart($event, index)"
-        @dragover.prevent="onDragOver(index)"
-        @dragend="onDragEnd"
-        class="card"
-        :class="{ dragging: draggedIndex === index }"
-      />
+        :full-list="boards"
+        :index="index"
+        :on-after-drag-end="afterDragEnd"
+        :on-after-drag-over="afterDragOver"
+      >
+        <BoardCard
+          :id="board.id"
+          :name="board.name"
+          class="card"
+        />
+      </DraggableComponent>
     </TransitionGroup>
   </section>
 </template>
@@ -78,17 +76,5 @@ function onDragOver(index: number) {
 
 .card {
   transition: 0.3s;
-}
-
-.dragging {
-  color: var(--text-light-color);
-  opacity: 0.4;
-  overflow: hidden;
-  position: relative;
-}
-
-.list-move {
-  pointer-events: none;
-  transition: all 0.4s ease;
 }
 </style>
