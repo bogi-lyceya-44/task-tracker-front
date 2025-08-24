@@ -27,7 +27,7 @@ components/
 ```
 
 Для определения компонента используется утилита [defineComponent](https://ru.vuejs.org/api/general#definecomponent)
-с синтаксисом функции (первый аргумент - setup функция, второй - объект дополнительных параметров)
+с синтаксисом функции (первый аргумент - setup функция, второй - объект дополнительных параметров).
 
 ```tsx
 const AppNavbar = defineComponent(
@@ -73,7 +73,7 @@ export default {
 [доке linaria](https://github.com/callstack/linaria/blob/master/docs/BASICS.md).
 
 В папке компонента должен присутствовать `index.ts`, который регламентирует экспорты компонента
-(также делает импорты чище и короче)
+(также делает импорты чище и короче).
 
 ```ts
 export { default } from "./AppNavbar.tsx";
