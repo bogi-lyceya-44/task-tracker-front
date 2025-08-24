@@ -1,5 +1,6 @@
-import { defineComponent, ref, watchEffect, type Ref } from "vue";
+import { defineComponent, ref, type Ref, watch, inject } from "vue";
 
+import type { Theme, UpdateTheme } from "../../composables/useTheme.ts";
 import Icon from "../Icon";
 
 import styles from "./style.ts";
@@ -8,11 +9,17 @@ const ThemeSwitcher = defineComponent(
   (props) => {
     const isOpenSub = ref(false);
 
-    watchEffect(() => {
-      if (!props.isParentOpen.value) {
-        isOpenSub.value = false;
-      }
-    });
+    const theme = inject("theme") as Ref<Theme>;
+    const updateTheme = inject("updateTheme") as UpdateTheme;
+
+    watch(
+      () => props.isParentOpen.value,
+      (isOpen) => {
+        if (!isOpen) {
+          isOpenSub.value = false;
+        }
+      },
+    );
 
     const openSubMenu = () => {
       isOpenSub.value = !isOpenSub.value;
@@ -35,22 +42,34 @@ const ThemeSwitcher = defineComponent(
             class={[styles.subMenu, { [styles.subMenuOpen]: isOpenSub.value }]}
           >
             <button
-              class={[styles.menuItem, styles.subMenuItem]}
-              onClick={openSubMenu}
+              class={[
+                styles.menuItem,
+                styles.subMenuItem,
+                { [styles.menuItemActive]: theme.value === "light" },
+              ]}
+              onClick={() => updateTheme("light")}
             >
               <Icon name="sun" size="1.2em" />
               <span>Light</span>
             </button>
             <button
-              class={[styles.menuItem, styles.subMenuItem]}
-              onClick={openSubMenu}
+              class={[
+                styles.menuItem,
+                styles.subMenuItem,
+                { [styles.menuItemActive]: theme.value === "dark" },
+              ]}
+              onClick={() => updateTheme("dark")}
             >
               <Icon name="moon" size="1.2em" />
               <span>Dark</span>
             </button>
             <button
-              class={[styles.menuItem, styles.subMenuItem]}
-              onClick={openSubMenu}
+              class={[
+                styles.menuItem,
+                styles.subMenuItem,
+                { [styles.menuItemActive]: theme.value === "system" },
+              ]}
+              onClick={() => updateTheme("system")}
             >
               <Icon name="monitor-smartphone" size="1.2em" />
               <span>System</span>

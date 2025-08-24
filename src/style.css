@@ -9,16 +9,35 @@
   --background-danger-color: #ffe5e5;
   --btn-background-color: #131313;
   --btn-hover-background-color: #383737;
+}
 
-  /* actual vars */
-  --background-color: #fff; /* #252B37 */
+:root {
+  --background-color: #ffffff;
   --second-background-color: #eaecf5;
-  --text-color: #101323; /* #F8F9FC */
-  --second-text-color: #717bbc; /* #A4A7AE */
-  --border-color: #c8cce5; /* #414651 */
-  --primary-color: #363f72; /* #535862 */
+  --text-color: #101323;
+  --second-text-color: #717bbc;
+  --border-color: #c8cce5;
+  --primary-color: #363f72;
   --primary-hover-color: #565f91;
   --primary-second-hover-color: rgb(200 204 229 / 60%);
+}
+
+:root[data-bs-theme="dark"] {
+  --background-color: #252b37;
+  --text-color: #f8f9fc;
+  --second-text-color: #a4a7ae;
+  --border-color: #414651;
+  --primary-color: #535862;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root[data-bs-theme="system"] {
+    --background-color: #252b37;
+    --text-color: #f8f9fc;
+    --second-text-color: #a4a7ae;
+    --border-color: #414651;
+    --primary-color: #535862;
+  }
 }
 
 * {
