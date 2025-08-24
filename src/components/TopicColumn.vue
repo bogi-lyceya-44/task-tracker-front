@@ -3,7 +3,7 @@ import { ref } from "vue";
 
 import { type TaskCardType } from "../types";
 
-import Icon from "./Icon"
+import Icon from "./Icon";
 import TaskCard from "./TaskCard.vue";
 
 defineProps<{

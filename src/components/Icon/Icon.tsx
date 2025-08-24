@@ -5,7 +5,7 @@ import {
   markRaw,
   onMounted,
   ref,
-  resolveDynamicComponent
+  resolveDynamicComponent,
 } from "vue";
 
 const Icon = defineComponent(
@@ -18,25 +18,25 @@ const Icon = defineComponent(
     });
 
     return () =>
-      iconComponent.value
-        ? (
-          <>
-            {(() => {
-              const Comp = resolveDynamicComponent(iconComponent.value) as DefineComponent;
-              return (
-                <Comp
-                  style={{
-                    display: "inline-block",
-                    verticalAlign: "middle",
-                    height: props.size,
-                    width: props.size
-                  }}
-                />
-              );
-            })()}
-          </>
-        )
-        : null;
+      iconComponent.value ? (
+        <>
+          {(() => {
+            const Comp = resolveDynamicComponent(
+              iconComponent.value,
+            ) as DefineComponent;
+            return (
+              <Comp
+                style={{
+                  display: "inline-block",
+                  verticalAlign: "middle",
+                  height: props.size,
+                  width: props.size,
+                }}
+              />
+            );
+          })()}
+        </>
+      ) : null;
   },
   {
     props: {
@@ -47,7 +47,7 @@ const Icon = defineComponent(
         default: "1em",
       },
     },
-  }
-)
+  },
+);
 
 export default Icon;

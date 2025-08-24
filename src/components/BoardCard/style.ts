@@ -1,4 +1,4 @@
-import {css} from "@linaria/core";
+import { css } from "@linaria/core";
 
 export default {
   boardLink: css`
@@ -35,6 +35,5 @@ export default {
     padding: 0.2em 0.4em;
     border-radius: 0.4em;
     background-color: var(--background-color);
-  `
-}
-
+  `,
+};

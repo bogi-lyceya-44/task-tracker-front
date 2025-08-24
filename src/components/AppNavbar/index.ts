@@ -1,1 +1,1 @@
-export { default } from './AppNavbar.tsx';
+export { default } from "./AppNavbar.tsx";

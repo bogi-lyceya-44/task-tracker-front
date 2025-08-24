@@ -1,4 +1,4 @@
-import {css} from "@linaria/core";
+import { css } from "@linaria/core";
 
 export default {
   boardPanelSection: css`
@@ -85,7 +85,8 @@ export default {
     gap: 2px;
     transition: 0.3s;
 
-    &:hover, &:hover > * {
+    &:hover,
+    &:hover > * {
       background-color: var(--border-color);
     }
 
@@ -120,5 +121,5 @@ export default {
     justify-content: center;
     background-color: var(--border-color);
     font-weight: 500;
-  `
-}
+  `,
+};

@@ -1,6 +1,6 @@
 import vue from "@vitejs/plugin-vue";
 import vueJsx from "@vitejs/plugin-vue-jsx";
-import wyw from '@wyw-in-js/vite';
+import wyw from "@wyw-in-js/vite";
 import { defineConfig } from "vite";
 import svgLoader from "vite-svg-loader";
 
@@ -9,12 +9,12 @@ export default defineConfig({
     vue(),
     vueJsx(),
     wyw({
-      include: ['**/*.{ts,tsx}'],
+      include: ["**/*.{ts,tsx}"],
       babelOptions: {
-        presets: ['@babel/preset-typescript', '@babel/preset-react'],
+        presets: ["@babel/preset-typescript", "@babel/preset-react"],
       },
     }),
-    svgLoader({ svgo: false })
+    svgLoader({ svgo: false }),
   ],
   base: process.env.NODE_ENV === "production" ? "/task-tracker-front/" : "/",
 });

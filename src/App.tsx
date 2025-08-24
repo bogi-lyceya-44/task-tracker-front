@@ -18,4 +18,3 @@ const App = defineComponent(() => {
 });
 
 export default App;
-

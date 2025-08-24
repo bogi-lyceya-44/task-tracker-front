@@ -22,16 +22,18 @@ const ThemeSwitcher = defineComponent(
       return (
         <div class={styles.menuItemWrapper}>
           <button
-            class={[styles.menuItem, { [styles.menuItemActive]: isOpenSub.value }]}
+            class={[
+              styles.menuItem,
+              { [styles.menuItemActive]: isOpenSub.value },
+            ]}
             onClick={openSubMenu}
           >
             <span>Theme</span>
-            <Icon
-              name="arrow_right"
-              size="0.8125rem"
-            />
+            <Icon name="arrow_right" size="0.8125rem" />
           </button>
-          <div class={[styles.subMenu, { [styles.subMenuOpen]: isOpenSub.value }]}>
+          <div
+            class={[styles.subMenu, { [styles.subMenuOpen]: isOpenSub.value }]}
+          >
             <button
               class={[styles.menuItem, styles.subMenuItem]}
               onClick={openSubMenu}
@@ -43,7 +45,7 @@ const ThemeSwitcher = defineComponent(
               class={[styles.menuItem, styles.subMenuItem]}
               onClick={openSubMenu}
             >
-              <Icon name="moon" size="1.2em"  />
+              <Icon name="moon" size="1.2em" />
               <span>Dark</span>
             </button>
             <button
@@ -59,7 +61,7 @@ const ThemeSwitcher = defineComponent(
     };
   },
   {
-    props: {isParentOpen: Object as () => Ref<boolean>},
+    props: { isParentOpen: Object as () => Ref<boolean> },
   },
 );
 

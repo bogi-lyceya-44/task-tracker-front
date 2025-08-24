@@ -1,9 +1,8 @@
-import {defineConfig} from "eslint/config";
-import pluginImport from 'eslint-plugin-import';
+import { defineConfig } from "eslint/config";
+import pluginImport from "eslint-plugin-import";
 import pluginVue from "eslint-plugin-vue";
 import globals from "globals";
 import tseslint from "typescript-eslint";
-
 
 export default defineConfig([
   {
@@ -17,18 +16,25 @@ export default defineConfig([
       globals: globals.browser,
     },
     plugins: {
-      'import': pluginImport
+      import: pluginImport,
     },
     rules: {
       "import/order": [
         "error",
         {
-          groups: ["builtin", "external", "internal", "parent", "sibling", "index"],
+          groups: [
+            "builtin",
+            "external",
+            "internal",
+            "parent",
+            "sibling",
+            "index",
+          ],
           "newlines-between": "always",
-          alphabetize: { order: "asc"},
-        }
-      ]
-    }
+          alphabetize: { order: "asc" },
+        },
+      ],
+    },
   },
 
   // TypeScript (include TSX)

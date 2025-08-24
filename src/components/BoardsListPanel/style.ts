@@ -1,4 +1,4 @@
-import {css} from "@linaria/core";
+import { css } from "@linaria/core";
 
 export default {
   panel: css`
@@ -11,4 +11,4 @@ export default {
     font-size: 2.25em;
     font-weight: 500;
   `,
-}
+};

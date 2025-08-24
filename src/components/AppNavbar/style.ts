@@ -14,5 +14,5 @@ export default {
     font-size: 1.2em;
     font-weight: 500;
     letter-spacing: 2px;
-  `
-}
+  `,
+};
