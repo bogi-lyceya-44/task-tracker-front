@@ -3,8 +3,9 @@ import { onMounted, ref } from "vue";
 
 import { useDragAndDrop } from "../composables/useDragAndDrop.ts";
 import { request } from "../utils/httpRequest.ts";
-import BoardCard from "./BoardCard.vue";
-import BoardsListPanel from "./BoardsListPanel.vue";
+
+import BoardCard from "./BoardCard";
+import BoardsListPanel from "./BoardsListPanel";
 
 interface Board {
   id: string;
@@ -36,7 +37,7 @@ async function onDragEnd() {
   await request("/change_board_order", "POST", { changes: boardsPlaces });
 }
 
-function onDragOver(index: number) {
+function onDragOverHandler(index: number) {
   boards.value = handleDragOver(boards.value, index);
 }
 </script>
@@ -52,7 +53,7 @@ function onDragOver(index: number) {
         :name="board.name"
         draggable="true"
         @dragstart="handleDragStart($event, index)"
-        @dragover.prevent="onDragOver(index)"
+        @dragover.prevent="onDragOverHandler(index)"
         @dragend="onDragEnd"
         class="card"
         :class="{ dragging: draggedIndex === index }"
@@ -68,12 +69,9 @@ function onDragOver(index: number) {
 
 .boards-list {
   display: grid;
+  margin-top: 2em;
   gap: 1em;
   grid-template-columns: repeat(auto-fit, minmax(12em, 1fr));
-  margin-top: 2em;
-  max-width: calc(
-    16em * v-bind("boards.length") + 1em * (v-bind("boards.length") - 1)
-  );
 }
 
 .card {
@@ -81,10 +79,10 @@ function onDragOver(index: number) {
 }
 
 .dragging {
+  position: relative;
+  overflow: hidden;
   color: var(--text-light-color);
   opacity: 0.4;
-  overflow: hidden;
-  position: relative;
 }
 
 .list-move {

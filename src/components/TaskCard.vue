@@ -1,16 +1,16 @@
 <script setup lang="ts">
-import BaseIcon from "./BaseIcon.vue";
+import Icon from './Icon'
 
 defineProps<{
   title: string;
-  description: string;
+  description: string | undefined;
 }>();
 </script>
 
 <template>
   <div class="task-card">
     <button class="edit-button">
-      <BaseIcon name="edit" height="14px" width="14px" />
+      <Icon name="edit" size="1.2em" />
     </button>
     <span class="title">{{ title }}</span>
     <span v-if="description" class="description">{{ description }}</span>
@@ -19,27 +19,27 @@ defineProps<{
 
 <style scoped>
 .task-card {
-  background-color: var(--background-color);
-  border: 1px solid var(--background-color);
-  border-radius: 0.75em;
-  box-shadow: 0 1px 1px #c8cce5;
+  position: relative;
   display: flex;
   flex-direction: column;
-  gap: 0.25em;
   padding: 0.5em;
-  position: relative;
+  border: 1px solid var(--background-color);
+  border-radius: 0.75em;
+  background-color: var(--background-color);
+  box-shadow: 0 1px 1px #c8cce5;
+  gap: 0.25em;
 }
 
 .edit-button {
-  background-color: transparent;
+  position: absolute;
+  top: 0.5em;
+  right: 0.5em;
+  display: flex;
+  padding: 0.1875em;
   border: none;
   border-radius: 0.25em;
-  display: flex;
+  background-color: transparent;
   opacity: 0;
-  padding: 0.1875em;
-  position: absolute;
-  right: 0.5em;
-  top: 0.5em;
   transition: 0.3s;
   visibility: hidden;
 }
@@ -55,8 +55,8 @@ defineProps<{
 }
 
 .title {
-  font-weight: 500;
   max-width: calc(100% - 1.2em);
+  font-weight: 500;
 }
 
 .description {

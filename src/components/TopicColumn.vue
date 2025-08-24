@@ -2,24 +2,21 @@
 import { ref } from "vue";
 
 import { type TaskCardType } from "../types";
-import BaseIcon from "./BaseIcon.vue";
+
+import Icon from "./Icon"
 import TaskCard from "./TaskCard.vue";
 
-// 🔹 props
 defineProps<{
   name: string;
   cards: TaskCardType[];
 }>();
 
-// 🔹 emits
 const emit = defineEmits<{
   (e: "dragstart", event: DragEvent): void;
 }>();
 
-// 🔹 state
 const allowDrag = ref(false);
 
-// 🔹 methods
 function onMouseDown() {
   allowDrag.value = true;
 }
@@ -53,7 +50,7 @@ function onDragStart(event: DragEvent) {
     >
       {{ name }}
       <button class="more-button">
-        <BaseIcon name="more" height="16px" width="16px" />
+        <Icon name="more" size="1rem" />
       </button>
     </div>
     <div class="cards-list">
@@ -66,7 +63,7 @@ function onDragStart(event: DragEvent) {
       />
     </div>
     <button class="create-card-button">
-      <BaseIcon name="plus" height="16px" width="16px" />
+      <Icon name="plus" size="1rem" />
       <span class="create-card-text">Add Card</span>
     </button>
   </div>
@@ -74,22 +71,22 @@ function onDragStart(event: DragEvent) {
 
 <style scoped>
 .topic {
-  background-color: var(--background-second-color);
-  border-radius: 1em;
-  box-shadow: 0 2px 2px -1px #c8cce5;
+  width: 16em;
   min-width: 16em;
   padding: 0.5em;
-  width: 16em;
+  border-radius: 1em;
+  background-color: var(--background-second-color);
+  box-shadow: 0 2px 2px -1px #c8cce5;
 }
 
 .topic-top {
-  align-items: center;
-  cursor: pointer;
   display: flex;
-  font-size: 1.125em;
-  font-weight: 500;
+  align-items: center;
   justify-content: space-between;
   padding: 0 0 0.625em 0.375em;
+  cursor: pointer;
+  font-size: 1.125em;
+  font-weight: 500;
 }
 
 .cards-list {
@@ -99,11 +96,11 @@ function onDragStart(event: DragEvent) {
 }
 
 .more-button {
-  background-color: transparent;
+  padding: 0.5em;
   border: none;
   border-radius: 0.5em;
+  background-color: transparent;
   cursor: pointer;
-  padding: 0.5em;
   transition: 0.3s;
 }
 
@@ -112,18 +109,18 @@ function onDragStart(event: DragEvent) {
 }
 
 .create-card-button {
+  display: flex;
+  width: 100%;
   align-items: center;
-  background-color: transparent;
+  padding: 0.75em 1em;
   border: none;
   border-radius: 0.75em;
+  margin-top: 0.625em;
+  background-color: transparent;
   color: var(--primary-color);
   cursor: pointer;
-  display: flex;
   gap: 1em;
-  margin-top: 0.625em;
-  padding: 0.75em 1em;
   transition: 0.3s;
-  width: 100%;
 }
 
 .create-card-text {
