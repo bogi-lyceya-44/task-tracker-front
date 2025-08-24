@@ -2,26 +2,23 @@
   font-size: 16px;
 
   --text-light-color: #787486;
-
   --background-focus-color: #f2f2f2;
   --background-second-color: #f7f6fa;
   --border-light-color: #dbdbdb;
-
   --text-danger-color: #b01212;
   --background-danger-color: #ffe5e5;
-
   --btn-background-color: #131313;
   --btn-hover-background-color: #383737;
 
   /* actual vars */
-  --background-color: #ffffff; /* #252B37 */
+  --background-color: #fff; /* #252B37 */
   --second-background-color: #eaecf5;
   --text-color: #101323; /* #F8F9FC */
   --second-text-color: #717bbc; /* #A4A7AE */
   --border-color: #c8cce5; /* #414651 */
   --primary-color: #363f72; /* #535862 */
   --primary-hover-color: #565f91;
-  --primary-second-hover-color: rgba(200, 204, 229, 0.6);
+  --primary-second-hover-color: rgb(200 204 229 / 60%);
 }
 
 * {
@@ -34,27 +31,27 @@ a {
 
 body {
   margin: 0;
-  font-family: "Avenir", sans-serif;
   background-color: var(--background-color);
+  font-family: Avenir, sans-serif;
 }
 
 button {
-  font-family: "Avenir", sans-serif;
+  font-family: Avenir, sans-serif;
 }
 
 .btn {
-  height: fit-content;
-  padding: 0.5em 1em;
   display: flex;
+  height: fit-content;
   align-items: center;
-  gap: 0.5em;
+  padding: 0.5em 1em;
+  border: none;
+  border-radius: 0.75em;
+  background-color: var(--primary-color);
+  color: var(--background-color);
+  cursor: pointer;
   font-size: 0.925em;
   font-weight: 400;
-  border: none;
-  color: var(--background-color);
-  background-color: var(--primary-color);
-  border-radius: 0.75em;
-  cursor: pointer;
+  gap: 0.5em;
   transition: 0.3s;
 }
 
@@ -63,10 +60,10 @@ button {
 }
 
 .avatar {
+  width: 2.25em;
+  height: 2.25em;
   border: 1px solid var(--border-color);
   border-radius: 2em;
-  height: 2.25em;
-  width: 2.25em;
 }
 
 .avatar.no-image {
@@ -77,13 +74,23 @@ button {
   font-weight: 500;
 }
 
-@media (max-width: 768px) {
+.app {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+}
+
+.main-content {
+  flex: 1;
+}
+
+@media (width <= 768px) {
   :root {
     font-size: 14px;
   }
 }
 
-@media (max-width: 480px) {
+@media (width <= 480px) {
   :root {
     font-size: 12px;
   }

@@ -2,7 +2,7 @@
 import { onMounted, ref, watch } from "vue";
 import { useRoute } from "vue-router";
 
-import BoardPanel from "../components/BoardPanel.vue";
+import BoardPanel from "../components/BoardPanel";
 import TopicsList from "../components/TopicsList.vue";
 import type { BoardMode } from "../types.ts";
 import { request } from "../utils/httpRequest.ts";

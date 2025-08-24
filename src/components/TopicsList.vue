@@ -4,18 +4,19 @@ import { defineComponent, ref } from "vue";
 import { useDragAndDrop } from "../composables/useDragAndDrop.ts";
 import { topicsList } from "../dataMock.ts";
 import type { TaskCardType } from "../types.ts";
-import BaseIcon from "./BaseIcon.vue";
+
+import Icon from "./Icon";
 import TopicColumn from "./TopicColumn.vue";
 
 interface Topic {
+  cards: TaskCardType[];
   id: string;
   name: string;
-  cards: TaskCardType[];
 }
 
 export default defineComponent({
   name: "TopicsList",
-  components: { BaseIcon, TopicColumn },
+  components: { Icon, TopicColumn },
   setup() {
     const topics = ref<Topic[]>(topicsList);
     const {
@@ -60,7 +61,7 @@ export default defineComponent({
         />
       </TransitionGroup>
       <button class="add-topic">
-        <BaseIcon class="add-topic-icon" name="plus" alt="" />
+        <Icon name="plus" size="0.9em" />
         <span>Add Topic</span>
       </button>
     </div>
@@ -76,11 +77,11 @@ export default defineComponent({
 
 .topics-list-wrapper {
   display: flex;
-  flex: 1;
-  gap: 2em;
   min-height: 100%;
-  overflow-x: scroll;
+  flex: 1;
   padding-bottom: 1em;
+  gap: 2em;
+  overflow-x: scroll;
 }
 
 .topics-list {
@@ -94,10 +95,10 @@ export default defineComponent({
 }
 
 .dragging {
+  position: relative;
+  overflow: hidden;
   color: var(--text-light-color);
   opacity: 0.4;
-  overflow: hidden;
-  position: relative;
 }
 
 .list-move {
@@ -106,27 +107,22 @@ export default defineComponent({
 }
 
 .add-topic {
+  display: flex;
+  width: 16em;
+  min-width: 10em;
+  height: fit-content;
   align-items: center;
-  background-color: var(--background-color);
+  padding: 0.6em 0.8em;
   border: none;
   border-radius: 1em;
+  background-color: var(--background-color);
   cursor: pointer;
-  display: flex;
   font-size: 1em;
   gap: 0.8em;
-  height: fit-content;
-  min-width: 10em;
-  padding: 0.6em 0.8em;
   transition: 0.3s;
-  width: 16em;
 }
 
 .add-topic:hover {
   background-color: var(--background-second-color);
-}
-
-.add-topic-icon {
-  height: 0.9em;
-  width: 0.9em;
 }
 </style>
