@@ -79,9 +79,14 @@ export default defineComponent({
   display: flex;
   min-height: 100%;
   flex: 1;
-  padding-bottom: 1em;
   gap: 2em;
   overflow-x: scroll;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.topics-list-wrapper::-webkit-scrollbar {
+  display: none;
 }
 
 .topics-list {
@@ -116,6 +121,7 @@ export default defineComponent({
   border: none;
   border-radius: 1em;
   background-color: var(--background-color);
+  color: var(--text-color);
   cursor: pointer;
   font-size: 1em;
   gap: 0.8em;
@@ -123,6 +129,6 @@ export default defineComponent({
 }
 
 .add-topic:hover {
-  background-color: var(--background-second-color);
+  background-color: var(--second-background-color);
 }
 </style>

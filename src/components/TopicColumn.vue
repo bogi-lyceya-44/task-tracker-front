@@ -71,12 +71,13 @@ function onDragStart(event: DragEvent) {
 
 <style scoped>
 .topic {
+  color: var(--text-color);
   width: 16em;
   min-width: 16em;
   padding: 0.5em;
   border-radius: 1em;
-  background-color: var(--background-second-color);
-  box-shadow: 0 2px 2px -1px #c8cce5;
+  background-color: var(--second-background-color);
+  box-shadow: 0 2px 2px -1px rgba(0, 0, 0, 0.12);
 }
 
 .topic-top {
@@ -96,6 +97,7 @@ function onDragStart(event: DragEvent) {
 }
 
 .more-button {
+  color: var(--text-color);
   padding: 0.5em;
   border: none;
   border-radius: 0.5em;
@@ -105,7 +107,7 @@ function onDragStart(event: DragEvent) {
 }
 
 .more-button:hover {
-  background-color: var(--border-color);
+  background-color: var(--second-background-color-hover);
 }
 
 .create-card-button {
@@ -130,6 +132,6 @@ function onDragStart(event: DragEvent) {
 }
 
 .create-card-button:hover {
-  background-color: var(--primary-second-hover-color);
+  background-color: var(--second-background-color-hover);
 }
 </style>

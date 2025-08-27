@@ -26,11 +26,12 @@ defineProps<{
   border: 1px solid var(--background-color);
   border-radius: 0.75em;
   background-color: var(--background-color);
-  box-shadow: 0 1px 1px #c8cce5;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.12);
   gap: 0.25em;
 }
 
 .edit-button {
+  color: var(--text-color);
   position: absolute;
   top: 0.5em;
   right: 0.5em;

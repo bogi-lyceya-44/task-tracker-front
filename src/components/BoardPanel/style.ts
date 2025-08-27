@@ -12,6 +12,8 @@ export default {
     background-color: var(--background-color);
   `,
   titleInput: css`
+    background-color: transparent;
+    color: var(--text-color);
     padding: 0.16em;
     border: none;
     border-radius: 0.3em;
@@ -20,9 +22,10 @@ export default {
     font-size: 1.875em;
     font-weight: 500;
     line-height: 1em;
+    width: fit-content;
 
     &:focus {
-      background-color: var(--background-second-color);
+      background-color: var(--second-background-color);
       outline: 2px solid var(--border-color);
     }
   `,
@@ -36,13 +39,13 @@ export default {
   breadcrumbs: css`
     display: flex;
     align-items: center;
-    color: var(--text-light-color);
+    color: var(--second-text-color);
     font-size: 0.875em;
     font-weight: 400;
     gap: 0.6em;
 
     & > a {
-      color: var(--text-light-color);
+      color: var(--second-text-color);
     }
 
     & > a:hover {
@@ -87,11 +90,11 @@ export default {
 
     &:hover,
     &:hover > * {
-      background-color: var(--border-color);
+      background-color: var(--second-background-color-hover);
     }
 
     &:hover > .active {
-      background-color: var(--primary-hover-color);
+      background-color: var(--primary-color-hover);
     }
   `,
 
@@ -100,11 +103,12 @@ export default {
     border-radius: 0.5em;
     background-color: var(--second-background-color);
     color: var(--primary-color);
+    font-weight: 500;
     transition: 0.3s;
 
     &.active {
       background-color: var(--primary-color);
-      color: #fff;
+      color: var(--background-color);
     }
   `,
 
@@ -116,10 +120,11 @@ export default {
   `,
 
   noImage: css`
+    color: var(--primary-color);
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: var(--border-color);
+    background-color: var(--second-background-color);
     font-weight: 500;
   `,
 };

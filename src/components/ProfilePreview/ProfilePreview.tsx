@@ -1,7 +1,8 @@
-import { defineComponent, onBeforeUnmount, onMounted, ref } from "vue";
+import { defineComponent, ref } from "vue";
 import { RouterLink } from "vue-router";
 
 import avatar from "../../assets/images/avatar.jpg";
+import usePopupMenu from "../../composables/usePopupMenu.ts";
 import Icon from "../Icon";
 
 import ThemeSwitcher from "./ThemeSwitcher.tsx";
@@ -9,33 +10,11 @@ import styles from "./style.ts";
 
 export default defineComponent(() => {
   const wrapper = ref<HTMLDivElement | null>(null);
-  const isOpen = ref(false);
-
-  function handleClickOutside(event: MouseEvent) {
-    if (
-      isOpen.value &&
-      wrapper.value &&
-      !wrapper.value.contains(event.target as Node)
-    ) {
-      isOpen.value = false;
-    }
-  }
-
-  function openProfilePreview() {
-    isOpen.value = !isOpen.value;
-  }
-
-  onMounted(() => {
-    document.addEventListener("click", handleClickOutside);
-  });
-
-  onBeforeUnmount(() => {
-    document.removeEventListener("click", handleClickOutside);
-  });
+  const { isOpen, switchOpenPreview } = usePopupMenu(wrapper);
 
   return () => (
     <div class={styles.profileWrapper} ref={wrapper}>
-      <button class={styles.profilePreview} onClick={openProfilePreview}>
+      <button class={styles.profilePreview} onClick={switchOpenPreview}>
         <img class={styles.avatar} src={avatar} alt="avatar" />
       </button>
       <div class={[styles.menu, { [styles.menuOpen]: isOpen.value }]}>

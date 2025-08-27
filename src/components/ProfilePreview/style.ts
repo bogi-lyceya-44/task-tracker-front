@@ -33,7 +33,7 @@ export default {
     border: 1px solid var(--border-color);
     border-radius: 1em;
     background-color: var(--background-color);
-    box-shadow: 0 0.4em 1em 0 #dbdbdb;
+    box-shadow: 0 0.4em 1em 0 rgba(0, 0, 0, 0.1);
     opacity: 0;
     pointer-events: none;
     transform: translateY(-0.5em);
@@ -51,7 +51,7 @@ export default {
   accountInfo: css`
     display: flex;
     align-items: center;
-    gap: 1em;
+    gap: 0.5em;
   `,
 
   accountAvatar: css`
@@ -68,6 +68,7 @@ export default {
   `,
 
   accountNickname: css`
+    color: var(--text-color);
     overflow: hidden;
     max-width: 12em;
     font-weight: 500;
@@ -113,15 +114,16 @@ export default {
     transition: 0.3s;
 
     &:hover {
-      background-color: var(--background-second-color);
+      background-color: var(--second-background-color);
     }
   `,
 
   menuItemActive: css`
-    background-color: var(--border-color);
+    background-color: var(--primary-color);
+    color: var(--background-color);
 
     &:hover {
-      background-color: var(--primary-second-hover-color);
+      background-color: var(--primary-color-hover);
     }
   `,
 
@@ -131,11 +133,12 @@ export default {
     left: -7.9em;
     display: flex;
     flex-direction: column;
+    gap: 0.3em;
     padding: 0.5em;
     border: 1px solid var(--border-color);
     border-radius: 1em;
     background-color: var(--background-color);
-    box-shadow: 0 0.4em 1em 0 #dbdbdb;
+    box-shadow: 0 0.4em 1em 0 rgba(0, 0, 0, 0.1);
     opacity: 0;
     pointer-events: none;
     transform: translateY(-0.5em);
@@ -155,10 +158,10 @@ export default {
   `,
 
   menuItemDanger: css`
-    color: var(--text-danger-color);
+    color: var(--danger-text-color);
 
     &:hover {
-      background-color: var(--background-danger-color);
+      background-color: var(--danger-background-color);
     }
   `,
 
