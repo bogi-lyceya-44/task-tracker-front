@@ -1,11 +1,12 @@
 <script setup lang="ts">
-import { onMounted, ref } from "vue";
+import { computed, onMounted, ref } from "vue";
 
-import { useDragAndDrop } from "../composables/useDragAndDrop.ts";
-import { request } from "../utils/httpRequest.ts";
+import { useDragAndDrop } from "../../composables/useDragAndDrop.ts";
+import { request } from "../../utils/httpRequest.ts";
+import BoardCard from "../BoardCard";
+import BoardsListPanel from "../BoardsListPanel";
 
-import BoardCard from "./BoardCard";
-import BoardsListPanel from "./BoardsListPanel";
+import styles from "./boardsList.style";
 
 interface Board {
   id: string;
@@ -40,12 +41,22 @@ async function onDragEnd() {
 function onDragOverHandler(index: number) {
   boards.value = handleDragOver(boards.value, index);
 }
+
+const maxWidth = computed(() => {
+  const n = boards.value.length;
+  return `calc(16em * ${n} + 1em * (${n} - 1))`;
+});
 </script>
 
 <template>
-  <section class="boards-list-section">
+  <section :class="styles.boardsListSection">
     <BoardsListPanel />
-    <TransitionGroup name="list" tag="div" class="boards-list">
+    <TransitionGroup
+      name="list"
+      tag="div"
+      :class="styles.boardsList"
+      :style="{ 'max-width': maxWidth }"
+    >
       <BoardCard
         v-for="(board, index) in boards"
         :key="board.id"
@@ -55,36 +66,14 @@ function onDragOverHandler(index: number) {
         @dragstart="handleDragStart($event, index)"
         @dragover.prevent="onDragOverHandler(index)"
         @dragend="onDragEnd"
-        class="card"
-        :class="{ dragging: draggedIndex === index }"
+        :class="[styles.card, { dragging: draggedIndex === index }]"
       />
     </TransitionGroup>
   </section>
 </template>
 
 <style scoped>
-.boards-list-section {
-  padding: 1.8em 2em;
-}
-
-.boards-list {
-  display: grid;
-  margin-top: 2em;
-  gap: 1em;
-  grid-template-columns: repeat(auto-fit, minmax(12em, 1fr));
-}
-
-.card {
-  transition: 0.3s;
-}
-
-.dragging {
-  position: relative;
-  overflow: hidden;
-  color: var(--text-light-color);
-  opacity: 0.4;
-}
-
+/* transition groups needs  */
 .list-move {
   pointer-events: none;
   transition: all 0.4s ease;

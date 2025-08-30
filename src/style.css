@@ -3,9 +3,8 @@
 
   --text-light-color: #787486;
   --background-focus-color: #f2f2f2;
-  --background-second-color: #f7f6fa;
+  --background-second-color: #EAECF5;
   --border-light-color: #dbdbdb;
-  --text-danger-color: #b01212;
   --background-danger-color: #ffe5e5;
   --btn-background-color: #131313;
   --btn-hover-background-color: #383737;
@@ -13,30 +12,46 @@
 
 :root {
   --background-color: #ffffff;
+  --danger-background-color: rgba(176, 18, 18, 0.12);
   --second-background-color: #eaecf5;
+  --second-background-color-hover: #c8cce5;
   --text-color: #101323;
-  --second-text-color: #717bbc;
+  --danger-text-color: rgb(176, 18, 18);
+  --second-text-color: #9FA1A7;
   --border-color: #c8cce5;
-  --primary-color: #363f72;
-  --primary-hover-color: #565f91;
+  --primary-color: rgb(54, 63, 114);
+  --primary-color-hover: rgba(54, 63, 114, 0.86);
+  --primary-color-light-hover: rgba(54, 63, 114, 0.2);
   --primary-second-hover-color: rgb(200 204 229 / 60%);
 }
 
 :root[data-bs-theme="dark"] {
-  --background-color: #252b37;
-  --text-color: #f8f9fc;
+  --background-color: #1A1D1D;
+  --danger-background-color: rgba(244, 107, 80, 0.16);
+  --second-background-color: #2B2E2E;
+  --second-background-color-hover: rgb(54, 58, 56);
+  --text-color: #FFFFFF;
+  --danger-text-color: rgb(244, 107, 80);
   --second-text-color: #a4a7ae;
-  --border-color: #414651;
-  --primary-color: #535862;
+  --border-color: #2B2E2E;
+  --primary-color: rgb(215, 254, 250);
+  --primary-color-hover: rgba(215, 254, 250, 0.8);
+  --primary-color-light-hover: rgb(65, 72, 72);
 }
 
 @media (prefers-color-scheme: dark) {
   :root[data-bs-theme="system"] {
-    --background-color: #252b37;
-    --text-color: #f8f9fc;
+    --background-color: #1A1D1D;
+    --danger-background-color: rgba(244, 107, 80, 0.16);
+    --second-background-color: #2B2E2E;
+    --second-background-color-hover: rgb(54, 58, 56);
+    --text-color: #FFFFFF;
+    --danger-text-color: rgb(244, 107, 80);
     --second-text-color: #a4a7ae;
-    --border-color: #414651;
-    --primary-color: #535862;
+    --border-color: #2B2E2E;
+    --primary-color: rgb(215, 254, 250);
+    --primary-color-hover: rgba(215, 254, 250, 0.8);
+    --primary-color-light-hover: rgb(65, 72, 72);
   }
 }
 
@@ -75,7 +90,7 @@ button {
 }
 
 .btn:hover {
-  background-color: var(--primary-hover-color);
+  background-color: var(--primary-color-hover);
 }
 
 .avatar {
@@ -91,12 +106,6 @@ button {
   justify-content: center;
   background-color: var(--border-color);
   font-weight: 500;
-}
-
-.app {
-  display: flex;
-  min-height: 100vh;
-  flex-direction: column;
 }
 
 .main-content {

@@ -7,6 +7,7 @@ export default {
   `,
 
   title: css`
+    color: var(--text-color);
     margin: 0;
     font-size: 2.25em;
     font-weight: 500;

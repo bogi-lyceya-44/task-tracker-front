@@ -1,1 +1,1 @@
-export { default } from "./BoardsListPanel";
+export { default } from "./BoardsListPanel.vue";

@@ -14,12 +14,13 @@ export default {
     padding: 0.6em;
     border: 1px solid transparent;
     border-radius: 1em;
-    background-color: #e8eefe;
-    box-shadow: 0 2px 2px -1px #c8cce5;
+    background-color: var(--second-background-color);
+    color: var(--text-color);
+    box-shadow: 0 2px 2px -1px rgba(0, 0, 0, 0.12);
     transition: 0.3s;
 
     &:hover {
-      box-shadow: 0 4px 6px 0 #c8cce5;
+      box-shadow: 0 4px 6px 0 rgba(0, 0, 0, 0.12);
     }
 
     .dragging > & {
