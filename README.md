@@ -21,33 +21,30 @@
 ```
 components/
 └── AppNavbar/
-    ├── index.ts        # barrel-экспорт
-    ├── AppNavbar.tsx   # компонент
-    └── style.ts        # стили (linaria)
+    ├── index.ts             # barrel-экспорт
+    ├── AppNavbar.vue        # компонент
+    └── appNavbar.style.ts   # стили (linaria)
 ```
 
-Для определения компонента используется утилита [defineComponent](https://ru.vuejs.org/api/general#definecomponent)
-с синтаксисом функции (первый аргумент - setup функция, второй - объект дополнительных параметров).
+Для написания компонентов используется Composition API.
 
-```tsx
-const AppNavbar = defineComponent(
-  (props) => {
-    /* here some logic */
+```vue
 
-    return () => (
-      /* here tags */
-      <div class={styles.navbar}>${props.name}</div>
-    );
-  },
-  {
-    props: { name: String },
-  },
-);
+<script setup lang="ts">
+  /* here some logic */
+  import {defineProps} from "@vue";
+  import styles from "./appNavbar.style";
 
-export default AppNavbar;
+  const props = defineProps({name: String})
+</script>
+
+<template>
+  <!-- here tags -->
+  <div :class="styles.navbar">{{ props.name }}</div>
+</template>
 ```
 
-Файл `style.ts` представляет собой экспорт одного объекта, поля в котором - это классы.
+Файл `appNavbar.style.ts` представляет собой экспорт одного объекта, поля в котором - это классы.
 
 ```ts
 import { css } from "@linaria/core";
@@ -71,6 +68,9 @@ export default {
 
 Более подробно о синтаксисе можно почитать в
 [доке linaria](https://github.com/callstack/linaria/blob/master/docs/BASICS.md).
+
+Для обеспечения адаптивности используйте единицы измерения ```em``` или ```rem``` в отступах / 
+скруглениях и других числовых свойствах.
 
 В папке компонента должен присутствовать `index.ts`, который регламентирует экспорты компонента
 (также делает импорты чище и короче).
