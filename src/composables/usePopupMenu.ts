@@ -1,6 +1,8 @@
 import { onBeforeUnmount, onMounted, type Ref, ref } from "vue";
 
-const usePopupMenu = (wrapper: Ref<HTMLDivElement | null>) => {
+const usePopupMenu = (
+  wrapper: Ref<HTMLDivElement | HTMLFormElement | null>,
+) => {
   const isOpen = ref(false);
 
   const handleClickOutside = (event: MouseEvent) => {

@@ -1,27 +1,3 @@
-<!--import { defineComponent } from "vue";-->
-<!--import { RouterLink } from "vue-router";-->
-
-<!--import avatarImage from "../../assets/images/avatar.jpg";-->
-<!--import Icon from "../Icon";-->
-
-<!--import BoardSettingsMenu from "./BoardSettingsMenu.tsx";-->
-<!--import styles from "./boardPanel.style.ts";-->
-
-<!--const BoardPanel = defineComponent(-->
-<!--  (props, { emit }) => {-->
-
-<!--    return () => (-->
-
-<!--    );-->
-<!--  },-->
-<!--  {-->
-<!--    props: { mode: String, name: String },-->
-<!--    emits: ["update:mode", "update:name"],-->
-<!--  },-->
-<!--);-->
-
-<!--export default BoardPanel;-->
-
 <script setup lang="ts">
 import type { PropType } from "vue";
 import { RouterLink } from "vue-router";
@@ -29,7 +5,7 @@ import { RouterLink } from "vue-router";
 import avatarImage from "../../assets/images/avatar.jpg";
 import Icon from "../BaseIcon/BaseIcon.vue";
 
-import BoardSettingsMenu from "./BoardSettingsMenu.vue";
+import BoardSettingsMenu from "./BoardSettingsMenu/BoardSettingsMenu.vue";
 import styles from "./boardPanel.style";
 
 const props = defineProps({

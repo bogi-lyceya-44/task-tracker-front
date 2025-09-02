@@ -1,7 +1,8 @@
 <script setup lang="ts">
-import { ref } from "vue";
+import { onMounted, ref } from "vue";
 
-import { type TaskCardType } from "../../types.ts";
+import type { TaskCardType } from "../../types.ts";
+import { request } from "../../utils/httpRequest.ts";
 import Icon from "../BaseIcon";
 import TaskCard from "../TaskCard";
 
@@ -13,8 +14,18 @@ const emit = defineEmits<{
 
 const props = defineProps<{
   name: string;
-  cards: TaskCardType[];
+  taskIds: string[];
 }>();
+
+const tasks = ref<TaskCardType[]>([]);
+
+onMounted(() => {
+  if (props.taskIds.length === 0) tasks.value = [];
+  else
+    request("/get_tasks", "POST", { ids: props.taskIds }).then((res) => {
+      tasks.value = res.tasks;
+    });
+});
 
 const allowDrag = ref(false);
 
@@ -56,10 +67,10 @@ function onDragStart(event: DragEvent) {
     </div>
     <div :class="styles.cardsList">
       <TaskCard
-        v-for="card in cards"
-        :key="card.id"
-        :title="card.title"
-        :description="card.description"
+        v-for="task in tasks"
+        :key="task.id"
+        :title="task.name"
+        :description="task.description"
         draggable="true"
       />
     </div>
