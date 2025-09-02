@@ -20,11 +20,11 @@
 import { ref } from "vue";
 import { useRoute, useRouter } from "vue-router";
 
-import usePopupMenu from "../../composables/usePopupMenu.ts";
-import { request } from "../../utils/httpRequest.ts";
-import Icon from "../BaseIcon/BaseIcon.vue";
+import usePopupMenu from "../../../composables/usePopupMenu.ts";
+import { request } from "../../../utils/httpRequest.ts";
+import Icon from "../../BaseIcon/BaseIcon.vue";
 
-import styles from "./boardSettingsMenu.style";
+import styles from "./boardSettingsMenu.style.ts";
 
 const wrapper = ref<HTMLDivElement | null>(null);
 const { isOpen, switchOpenPreview } = usePopupMenu(wrapper);

@@ -1,38 +1,27 @@
 <script setup lang="ts">
-import { onMounted, ref, watch } from "vue";
+import { provide, ref } from "vue";
 import { useRoute } from "vue-router";
 
 import BoardPanel from "../components/BoardPanel";
 import TopicsList from "../components/TopicsList";
+import useBoard from "../composables/useBoard.ts";
 import type { BoardMode } from "../types.ts";
-import { request } from "../utils/httpRequest.ts";
-
-const boardName = ref("");
-const topicIds = ref<string[]>([]);
 const boardMode = ref<BoardMode>("topics");
 const boardId = useRoute().params.id;
 
-onMounted(async () => {
-  const board = (
-    await request("/get_boards", "POST", { ids: [String(boardId)] })
-  ).boards[0];
-  boardName.value = board.name;
-  topicIds.value = board.topicIds;
-});
+const { boardName, topics, addTopic } = useBoard(String(boardId));
 
-watch(boardName, async (boardName, prevBoardName) => {
-  if (boardName !== prevBoardName) {
-    await request("/update_boards", "POST", {
-      boardsToUpdate: [{ id: String(boardId), name: boardName }],
-    });
-  }
-});
+provide<(name: string) => void>("addTopic", addTopic);
 </script>
 
 <template>
   <div class="board-wrapper">
-    <BoardPanel v-model:name="boardName" v-model:mode="boardMode" />
-    <TopicsList :topic-ids="topicIds" v-if="boardMode === 'topics'" />
+    <BoardPanel
+      v-if="boardName"
+      v-model:name="boardName"
+      v-model:mode="boardMode"
+    />
+    <TopicsList v-model:topics="topics" v-if="boardMode === 'topics'" />
   </div>
 </template>
 

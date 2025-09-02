@@ -29,13 +29,12 @@ components/
 Для написания компонентов используется Composition API.
 
 ```vue
-
 <script setup lang="ts">
-  /* here some logic */
-  import {defineProps} from "@vue";
-  import styles from "./appNavbar.style";
+/* here some logic */
+import { defineProps } from "@vue";
+import styles from "./appNavbar.style";
 
-  const props = defineProps({name: String})
+const props = defineProps({ name: String });
 </script>
 
 <template>
@@ -69,7 +68,7 @@ export default {
 Более подробно о синтаксисе можно почитать в
 [доке linaria](https://github.com/callstack/linaria/blob/master/docs/BASICS.md).
 
-Для обеспечения адаптивности используйте единицы измерения ```em``` или ```rem``` в отступах / 
+Для обеспечения адаптивности используйте единицы измерения `em` или `rem` в отступах /
 скруглениях и других числовых свойствах.
 
 В папке компонента должен присутствовать `index.ts`, который регламентирует экспорты компонента
