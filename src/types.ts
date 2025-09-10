@@ -4,6 +4,17 @@ export type TaskCardType = {
   description?: string;
 };
 
+export type TopicColumnTask = {
+  id: string;
+  name: string;
+  taskIds: string[];
+};
+
+export type BoardCardType = {
+  id: string;
+  name: string;
+};
+
 export type BodyType = {
   [key: string]: number | string | string[] | never | BodyType | BodyType[];
 };

@@ -1,6 +1,10 @@
 import { css } from "@linaria/core";
 
 export default {
+  topicWrapper: css`
+    height: 100%;
+  `,
+
   topic: css`
     color: var(--text-color);
     width: 16em;
@@ -21,10 +25,19 @@ export default {
     font-weight: 500;
   `,
 
-  cardsList: css`
+  cardsWrapper: css`
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
+  `,
+
+  cardsList: css`
+    display: flex;
+    flex-direction: column;
+  `,
+
+  cardWrapper: css`
+    padding-bottom: 0.5rem;
   `,
 
   moreButton: css`

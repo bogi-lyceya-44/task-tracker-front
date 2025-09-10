@@ -30,8 +30,11 @@ export default {
     gap: 2em;
   `,
 
+  topicWrapper: css`
+    height: 100%;
+  `,
+
   topic: css`
-    height: fit-content;
     transition: 0.3s;
   `,
 
@@ -40,10 +43,5 @@ export default {
     overflow: hidden;
     color: var(--text-light-color);
     opacity: 0.4;
-  `,
-
-  listMove: css`
-    pointer-events: none;
-    transition: all 0.4s ease;
   `,
 };

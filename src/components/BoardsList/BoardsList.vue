@@ -1,22 +1,17 @@
 <script setup lang="ts">
 import { computed, onMounted, ref } from "vue";
 
-import { useDragAndDrop } from "../../composables/useDragAndDrop.ts";
+import type { BoardCardType } from "../../types.ts";
 import { request } from "../../utils/httpRequest.ts";
 import BoardCard from "../BoardCard";
 import BoardsListPanel from "../BoardsListPanel";
 
 import styles from "./boardsList.style";
+import useBoardsDragAndDrop from "./useBoardsDragAndDrop.ts";
 
-interface Board {
-  id: string;
-  name: string;
-}
+const boards = ref<BoardCardType[]>([]);
 
-const boards = ref<Board[]>([]);
-
-const { draggedIndex, handleDragStart, handleDragOver, handleDragEnd } =
-  useDragAndDrop<Board>();
+const { onDragStart, onDragOver } = useBoardsDragAndDrop(boards);
 
 onMounted(async () => {
   const boardsRes = (await request("/get_all_boards", "POST", {})).boards;
@@ -28,19 +23,6 @@ onMounted(async () => {
     return orderA - orderB;
   });
 });
-
-async function onDragEnd() {
-  handleDragEnd();
-  const boardsPlaces = boards.value.map((board, index) => ({
-    boardId: board.id,
-    place: index + 1,
-  }));
-  await request("/change_board_order", "POST", { changes: boardsPlaces });
-}
-
-function onDragOverHandler(index: number) {
-  boards.value = handleDragOver(boards.value, index);
-}
 
 const maxWidth = computed(() => {
   const n = boards.value.length;
@@ -58,15 +40,13 @@ const maxWidth = computed(() => {
       :style="{ 'max-width': maxWidth }"
     >
       <BoardCard
-        v-for="(board, index) in boards"
+        v-for="(board, index) of boards"
+        draggable="true"
         :key="board.id"
         :id="board.id"
         :name="board.name"
-        draggable="true"
-        @dragstart="handleDragStart($event, index)"
-        @dragover.prevent="onDragOverHandler(index)"
-        @dragend="onDragEnd"
-        :class="[styles.card, { dragging: draggedIndex === index }]"
+        @dragstart="() => onDragStart(board)"
+        @dragover="() => onDragOver(board, index)"
       />
     </TransitionGroup>
   </section>
