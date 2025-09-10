@@ -38,6 +38,7 @@ export default {
   `,
 
   title: css`
+    color: var(--text-color);
     max-width: calc(100% - 1.2em);
     font-weight: 500;
   `,

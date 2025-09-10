@@ -1,12 +1,12 @@
 <script setup lang="ts">
-import { useDragAndDrop } from "../../composables/useDragAndDrop.ts";
 import TopicColumn from "../TopicColumn";
 
 import TopicCreationForm from "./TopicCreationForm/TopicCreationForm.vue";
 import TopicsListSkeleton from "./TopicsListSkeleton/TopicsListSkeleton.vue";
 import styles from "./topicsList.style";
+import useTopicsDragAndDrop from "./useTopicsDragAndDrop.ts";
 
-interface Topic {
+export interface Topic {
   id: string;
   name: string;
   taskIds: string[];
@@ -14,17 +14,7 @@ interface Topic {
 
 const topics = defineModel<Topic[] | null>("topics");
 
-const {
-  draggedIndex,
-  handleDragStart,
-  handleDragOver,
-  handleDrop,
-  handleDragEnd,
-} = useDragAndDrop<Topic>();
-
-const onDragOverWrapper = (index: number) => {
-  if (topics.value) topics.value = handleDragOver(topics.value, index);
-};
+const { onDragStart, onDragOver } = useTopicsDragAndDrop(topics);
 </script>
 
 <template>
@@ -34,14 +24,14 @@ const onDragOverWrapper = (index: number) => {
         <TransitionGroup name="list" tag="div" :class="styles.topicsList">
           <TopicColumn
             v-for="(topic, index) in topics"
+            draggable="true"
             :key="topic.id"
-            :taskIds="topic.taskIds"
+            :id="topic.id"
             :name="topic.name"
-            @dragstart="(e) => handleDragStart(e, index, 'top')"
-            @dragover.prevent="() => onDragOverWrapper(index)"
-            @drop="handleDrop"
-            @dragend="handleDragEnd"
-            :class="[styles.topic, { dragging: draggedIndex === index }]"
+            :taskIds="topic.taskIds"
+            :class="styles.topic"
+            @dragstart="() => onDragStart(topic)"
+            @dragover="() => onDragOver(topic, index)"
           />
         </TransitionGroup>
         <TopicCreationForm />
@@ -56,5 +46,9 @@ const onDragOverWrapper = (index: number) => {
 .list-move {
   pointer-events: none;
   transition: all 0.4s ease;
+}
+
+.list-leave-active {
+  position: absolute;
 }
 </style>

@@ -75,5 +75,5 @@ export default {
 (также делает импорты чище и короче).
 
 ```ts
-export { default } from "./AppNavbar.tsx";
+export { default } from "./AppNavbar.vue";
 ```

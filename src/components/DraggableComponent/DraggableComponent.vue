@@ -1,9 +1,10 @@
 <script setup lang="ts" generic="T">
-import { useDragState } from "../composables/useDragState.ts";
+import { useDragState } from "../../composables/useDragState.ts";
 
 interface DraggableProps {
   fullList: T[];
   index: number;
+  type: string;
   pos?: string;
 
   onBeforeDragStart?: () => void;
@@ -19,7 +20,7 @@ interface DraggableProps {
 const props = withDefaults(defineProps<DraggableProps>(), {
   pos: "mid",
 });
-const { draggedIndex, startDrag, stopDrag } = useDragState();
+const { draggedIndex, draggedType, startDrag, stopDrag } = useDragState();
 
 function reorder(arr: T[], from: number, to: number): T[] {
   const copy = [...arr];
@@ -28,16 +29,16 @@ function reorder(arr: T[], from: number, to: number): T[] {
   return copy;
 }
 
-function handleDragStart(
-  event: DragEvent,
-  index: number,
-) {
-  event.dataTransfer!.setData('application/draggable', 'true');
-  event.dataTransfer!.effectAllowed = 'move';
+function handleDragStart(event: DragEvent, index: number) {
+  event.dataTransfer!.setData("application/draggable", "true");
+  event.dataTransfer!.effectAllowed = "move";
 
   props.onBeforeDragStart?.();
 
-  startDrag(index);
+  const currentTarget = event.currentTarget as HTMLElement;
+  const type = currentTarget.dataset.type;
+
+  startDrag(index, type);
 
   const target = event.target as HTMLElement;
   if (!target) return;
@@ -71,9 +72,11 @@ function handleDragOver(index: number) {
   props.onBeforeDragOver?.();
 
   if (draggedIndex.value !== null && draggedIndex.value !== index) {
-    const newList = reorder(props.fullList, draggedIndex.value, index);
-    startDrag(index);
-    props.onAfterDragOver?.(newList);
+    if (props.type === draggedType.value) {
+      const newList = reorder(props.fullList, draggedIndex.value, index);
+      startDrag(index);
+      props.onAfterDragOver?.(newList);
+    }
   }
 }
 
@@ -93,13 +96,14 @@ function handleDragEnd() {
 <template>
   <div
     draggable="true"
-    @dragstart="handleDragStart($event, props.index)"
+    @dragstart.stop="handleDragStart($event, props.index)"
     @dragover.prevent="handleDragOver(props.index)"
     @drop="handleDrop"
     @dragend="handleDragEnd"
+    :data-type="props.type"
     :class="{ dragging: draggedIndex === props.index }"
   >
-    <slot></slot>
+    <slot :data-type="props.type"></slot>
   </div>
 </template>
 
