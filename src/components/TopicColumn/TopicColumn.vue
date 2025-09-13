@@ -2,7 +2,7 @@
 import { onMounted, ref, watch } from "vue";
 
 import { useDragState } from "../../composables/useDragState.ts";
-import type { TaskCardType, TopicColumnTask } from "../../types.ts";
+import type { TaskCardType, TopicColumnType } from "../../types.ts";
 import { request } from "../../utils/httpRequest.ts";
 import Icon from "../BaseIcon";
 import TaskCard from "../TaskCard";
@@ -12,9 +12,9 @@ import useTasksDragAndDrop from "./useTasksDragAndDrop.ts";
 
 defineOptions({ inheritAttrs: false });
 
-const props = defineProps<TopicColumnTask>();
+const props = defineProps<TopicColumnType>();
 
-const emit = defineEmits(["dragstart", "dragover"]);
+const emit = defineEmits(["dragstart", "dragover", "dragend"]);
 
 const tasks = ref<TaskCardType[]>([]);
 const needsSync = ref(false);
@@ -42,7 +42,9 @@ const dragState = useDragState();
 
 const onDragOver = () => {
   const dragEntity = dragState.draggedEntity.value;
-  onTopicDragOver();
+  if (dragEntity?.type === "task") {
+    onTopicDragOver();
+  }
   if (dragEntity?.type === "topic") {
     emit("dragover");
   }
@@ -92,13 +94,14 @@ watch(
 <template>
   <div
     :class="[styles.topicWrapper, $attrs.class]"
-    @dragover.prevent="onDragOver"
+    @dragover.stop.prevent="onDragOver"
     @drop.prevent="onDrop"
   >
     <div
       :class="styles.topic"
       :draggable="!!$attrs.draggable"
-      @dragstart="(e) => emit('dragstart', e)"
+      @dragstart.stop="(e) => emit('dragstart', e)"
+      @dragend.stop="(e) => emit('dragend', e)"
     >
       <div :class="styles.topicTop">
         {{ props.name }}

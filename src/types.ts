@@ -4,7 +4,7 @@ export type TaskCardType = {
   description?: string;
 };
 
-export type TopicColumnTask = {
+export type TopicColumnType = {
   id: string;
   name: string;
   taskIds: string[];

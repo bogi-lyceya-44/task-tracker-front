@@ -1,26 +1,44 @@
 <script setup lang="ts">
+import { useRoute } from "vue-router";
+
+import useDragAndDropReorder from "../../composables/useDragAndDropReorder.ts";
+import type { TopicColumnType } from "../../types.ts";
+import { request } from "../../utils/httpRequest.ts";
 import TopicColumn from "../TopicColumn";
 
 import TopicCreationForm from "./TopicCreationForm/TopicCreationForm.vue";
-import TopicsListSkeleton from "./TopicsListSkeleton/TopicsListSkeleton.vue";
 import styles from "./topicsList.style";
-import useTopicsDragAndDrop from "./useTopicsDragAndDrop.ts";
 
-export interface Topic {
-  id: string;
-  name: string;
-  taskIds: string[];
-}
+const topics = defineModel<TopicColumnType[] | null>("topics");
 
-const topics = defineModel<Topic[] | null>("topics");
+const route = useRoute();
 
-const { onDragStart, onDragOver } = useTopicsDragAndDrop(topics);
+const { onDragStart, onDragOver, onDragEnd } = useDragAndDropReorder(
+  topics,
+  "topic",
+);
+
+const onDragEndExtended = () => {
+  onDragEnd();
+
+  if (topics.value) {
+    const boardId = route.params.id as string;
+    request("/update_boards", "POST", {
+      boardsToUpdate: [
+        {
+          id: boardId,
+          topicIds: topics.value.map((topic) => topic.id),
+        },
+      ],
+    });
+  }
+};
 </script>
 
 <template>
   <section :class="styles.topicListSection">
     <div :class="styles.topicsListWrapper">
-      <div :class="styles.topicsListInner" v-if="topics">
+      <div :class="styles.topicsListInner">
         <TransitionGroup name="list" tag="div" :class="styles.topicsList">
           <TopicColumn
             v-for="(topic, index) in topics"
@@ -32,11 +50,11 @@ const { onDragStart, onDragOver } = useTopicsDragAndDrop(topics);
             :class="styles.topic"
             @dragstart="() => onDragStart(topic)"
             @dragover="() => onDragOver(topic, index)"
+            @dragend="onDragEndExtended"
           />
         </TransitionGroup>
         <TopicCreationForm />
       </div>
-      <TopicsListSkeleton v-else />
     </div>
   </section>
 </template>

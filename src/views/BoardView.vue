@@ -4,12 +4,14 @@ import { useRoute } from "vue-router";
 
 import BoardPanel from "../components/BoardPanel";
 import TopicsList from "../components/TopicsList";
+import TopicsListSkeleton from "../components/TopicsList/TopicsListSkeleton/TopicsListSkeleton.vue";
 import useBoard from "../composables/useBoard.ts";
 import type { BoardMode } from "../types.ts";
-const boardMode = ref<BoardMode>("topics");
-const boardId = useRoute().params.id;
 
-const { boardName, topics, addTopic } = useBoard(String(boardId));
+const boardMode = ref<BoardMode>("topics");
+const boardId = String(useRoute().params.id);
+
+const { boardName, topics, addTopic } = useBoard(boardId);
 
 provide<(name: string) => void>("addTopic", addTopic);
 </script>
@@ -21,7 +23,10 @@ provide<(name: string) => void>("addTopic", addTopic);
       v-model:name="boardName"
       v-model:mode="boardMode"
     />
-    <TopicsList v-model:topics="topics" v-if="boardMode === 'topics'" />
+    <div v-if="boardMode === 'topics'">
+      <TopicsList v-if="topics" v-model:topics="topics" />
+      <TopicsListSkeleton v-else />
+    </div>
   </div>
 </template>
 

@@ -19,7 +19,7 @@ const theme = inject("theme") as Ref<Theme>;
 const updateTheme = inject("updateTheme") as UpdateTheme;
 
 watch(
-  () => props.isParentOpen.value,
+  () => props.isParentOpen,
   (isOpen) => {
     if (!isOpen) {
       isOpenSub.value = false;

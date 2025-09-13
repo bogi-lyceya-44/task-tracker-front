@@ -1,17 +1,30 @@
 <script setup lang="ts">
 import { computed, onMounted, ref } from "vue";
 
+import useDragAndDropReorder from "../../composables/useDragAndDropReorder.ts";
 import type { BoardCardType } from "../../types.ts";
 import { request } from "../../utils/httpRequest.ts";
 import BoardCard from "../BoardCard";
 import BoardsListPanel from "../BoardsListPanel";
 
 import styles from "./boardsList.style";
-import useBoardsDragAndDrop from "./useBoardsDragAndDrop.ts";
 
 const boards = ref<BoardCardType[]>([]);
 
-const { onDragStart, onDragOver } = useBoardsDragAndDrop(boards);
+const { onDragStart, onDragOver, onDragEnd } = useDragAndDropReorder(
+  boards,
+  "board",
+);
+
+const onDragEndExtended = () => {
+  onDragEnd();
+  request("/change_board_order", "POST", {
+    changes: boards.value.map((board, index) => ({
+      boardId: board.id,
+      place: index + 1,
+    })),
+  }).then((res) => console.log(res));
+};
 
 onMounted(async () => {
   const boardsRes = (await request("/get_all_boards", "POST", {})).boards;
@@ -47,6 +60,7 @@ const maxWidth = computed(() => {
         :name="board.name"
         @dragstart="() => onDragStart(board)"
         @dragover="() => onDragOver(board, index)"
+        @dragend="onDragEndExtended"
       />
     </TransitionGroup>
   </section>
