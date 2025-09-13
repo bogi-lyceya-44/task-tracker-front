@@ -1,10 +1,16 @@
 import { ref } from "vue";
 
-import type { BoardCardType, TaskCardType, TopicColumnTask } from "../types.ts";
+import type { BoardCardType, TaskCardType, TopicColumnType } from "../types.ts";
 
-type DragEntity =
+export type DragEntityMap = {
+  task: TaskCardType;
+  topic: TopicColumnType;
+  board: BoardCardType;
+};
+
+export type DragEntity =
   | { type: "task"; entity: TaskCardType }
-  | { type: "topic"; entity: TopicColumnTask }
+  | { type: "topic"; entity: TopicColumnType }
   | { type: "board"; entity: BoardCardType };
 
 const draggedEntity = ref<DragEntity | null>(null);

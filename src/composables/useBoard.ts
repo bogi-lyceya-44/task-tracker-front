@@ -1,17 +1,12 @@
 import { onMounted, ref } from "vue";
 
+import type { TopicColumnType } from "../types.ts";
 import { request } from "../utils/httpRequest.ts";
-
-interface Topic {
-  id: string;
-  name: string;
-  taskIds: string[];
-}
 
 const useBoard = (boardId: string) => {
   const boardName = ref<string | null>(null);
   const topicIds = ref<string[]>([]);
-  const topics = ref<Topic[] | null>(null);
+  const topics = ref<TopicColumnType[] | null>(null);
 
   const fetchBoard = () =>
     request("/get_boards", "POST", { ids: [boardId] })
