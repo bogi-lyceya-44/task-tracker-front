@@ -1,12 +1,12 @@
-import { ref } from "vue";
+import { type Ref, ref, watch } from "vue";
 
 import { useDragState } from "../../composables/useDragState.ts";
 import type { TaskCardType } from "../../types.ts";
 
 const { draggedEntity, afterDragOut } = useDragState();
 
-const useTasksDragAndDrop = (tasks: TaskCardType[]) => {
-  const tasksPreview = ref<TaskCardType[]>(tasks);
+const useTasksDragAndDrop = (tasks: Ref<TaskCardType[]>) => {
+  const tasksPreview = ref<TaskCardType[]>(tasks.value);
 
   const onTaskDragStart = (task: TaskCardType) => {
     draggedEntity.value = { type: "task", entity: task };
@@ -61,6 +61,10 @@ const useTasksDragAndDrop = (tasks: TaskCardType[]) => {
     draggedEntity.value = null;
     afterDragOut.value = null;
   };
+
+  watch(tasks, (newTasks) => {
+    tasksPreview.value = newTasks;
+  });
 
   return {
     tasksPreview,

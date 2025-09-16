@@ -1,12 +1,14 @@
 <script setup lang="ts">
-import { onMounted, ref, watch } from "vue";
+import { ref, watch } from "vue";
 
 import { useDragState } from "../../composables/useDragState.ts";
+import useTopic from "../../composables/useTopic.ts";
 import type { TaskCardType, TopicColumnType } from "../../types.ts";
 import { request } from "../../utils/httpRequest.ts";
 import Icon from "../BaseIcon";
 import TaskCard from "../TaskCard";
 
+import TaskCreationForm from "./TaskCreationForm/TaskCreationForm.vue";
 import styles from "./topicColumn.style";
 import useTasksDragAndDrop from "./useTasksDragAndDrop.ts";
 
@@ -16,8 +18,13 @@ const props = defineProps<TopicColumnType>();
 
 const emit = defineEmits(["dragstart", "dragover", "dragend"]);
 
-const tasks = ref<TaskCardType[]>([]);
 const needsSync = ref(false);
+
+const { topicName, tasks, addTask } = useTopic(
+  props.name,
+  props.taskIds,
+  props.id,
+);
 
 const {
   tasksPreview,
@@ -26,17 +33,7 @@ const {
   onTopicDragOver,
   onDrop,
   onDragEnd,
-} = useTasksDragAndDrop(tasks.value);
-
-onMounted(() => {
-  if (props.taskIds.length === 0) tasks.value = [];
-  else {
-    request("/get_tasks", "POST", { ids: props.taskIds }).then((res) => {
-      tasks.value = res.tasks;
-      tasksPreview.value = res.tasks;
-    });
-  }
-});
+} = useTasksDragAndDrop(tasks);
 
 const dragState = useDragState();
 
@@ -104,13 +101,12 @@ watch(
       @dragend.stop="(e) => emit('dragend', e)"
     >
       <div :class="styles.topicTop">
-        {{ props.name }}
+        {{ topicName }}
         <button :class="styles.moreButton">
           <Icon name="more" size="1rem" />
         </button>
       </div>
       <div :class="styles.cardsWrapper">
-        <!--        <div v-if="tasksPreview.length === 0">asd</div>-->
         <TransitionGroup
           name="list"
           tag="div"
@@ -134,10 +130,11 @@ watch(
           </div>
         </TransitionGroup>
       </div>
-      <button :class="styles.createCardButton">
-        <Icon name="plus" size="1rem" />
-        <span :class="styles.createCardText">Add Card</span>
-      </button>
+      <TaskCreationForm
+        :topicId="props.id"
+        :taskIds="props.taskIds"
+        @addTask="addTask"
+      />
     </div>
   </div>
 </template>
