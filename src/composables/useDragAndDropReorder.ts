@@ -8,10 +8,37 @@ import {
 const useDragAndDropReorder = <K extends keyof DragEntityMap>(
   items: Ref<DragEntityMap[K][] | null | undefined>,
   type: K,
+  pos: "top" | "mid" = "mid",
 ) => {
   const dragState = useDragState();
 
-  const onDragStart = (item: DragEntityMap[K]) => {
+  const onDragStart = (event: DragEvent, item: DragEntityMap[K]) => {
+    event.dataTransfer!.setData("application/draggable", "true");
+    event.dataTransfer!.effectAllowed = "move";
+
+    const target = event.target as HTMLElement;
+    if (!target) return;
+
+    const dragGhost = target.cloneNode(true) as HTMLElement;
+    const { width, height } = target.getBoundingClientRect();
+
+    Object.assign(dragGhost.style, {
+      height: `${height}px`,
+      left: "-1000px",
+      pointerEvents: "none",
+      position: "absolute",
+      top: "-1000px",
+      width: `${width}px`,
+    });
+
+    document.body.appendChild(dragGhost);
+
+    if (pos === "top") {
+      event.dataTransfer!.setDragImage(dragGhost, width / 2, 20);
+    } else {
+      event.dataTransfer!.setDragImage(dragGhost, width / 2, height / 2);
+    }
+
     dragState.draggedEntity.value = { type, entity: item } as DragEntity;
   };
 

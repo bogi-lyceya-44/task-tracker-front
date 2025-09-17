@@ -11,9 +11,10 @@ import type { BoardMode } from "../types.ts";
 const boardMode = ref<BoardMode>("topics");
 const boardId = String(useRoute().params.id);
 
-const { boardName, topics, addTopic } = useBoard(boardId);
+const { boardName, topics, addTopic, deleteTopic } = useBoard(boardId);
 
 provide<(name: string) => void>("addTopic", addTopic);
+provide<(name: string) => void>("deleteTopic", deleteTopic);
 </script>
 
 <template>

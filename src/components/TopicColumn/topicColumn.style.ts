@@ -19,7 +19,7 @@ export default {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 0 0 0.625em 0.375em;
+    padding: 0 0 0.625em 0;
     cursor: pointer;
     font-size: 1.125em;
     font-weight: 500;

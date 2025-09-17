@@ -1,4 +1,5 @@
-import { onMounted, ref } from "vue";
+import throttle from "lodash/throttle";
+import { onMounted, ref, watch } from "vue";
 
 import type { TaskCardType } from "../types.ts";
 import { request } from "../utils/httpRequest.ts";
@@ -47,6 +48,25 @@ const useTopic = (name: string, taskIdsList: string[], topicId: string) => {
           tasks.value = res.tasks;
         }),
       );
+
+  const throttledRenameRequest = throttle(
+    (name: string) => {
+      request("/update_topics", "POST", {
+        topicsToUpdate: [
+          {
+            id: topicId,
+            name,
+          },
+        ],
+      });
+    },
+    800,
+    { leading: false, trailing: true },
+  );
+
+  watch(topicName, (newValue) => {
+    throttledRenameRequest(newValue);
+  });
 
   return { topicName, tasks, addTask };
 };

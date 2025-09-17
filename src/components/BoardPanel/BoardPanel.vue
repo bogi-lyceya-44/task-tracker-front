@@ -4,32 +4,26 @@ import { RouterLink } from "vue-router";
 
 import avatarImage from "../../assets/images/avatar.jpg";
 import Icon from "../BaseIcon/BaseIcon.vue";
+import EditableTitle from "../EditableTitle/EditableTitle.vue";
 
 import BoardSettingsMenu from "./BoardSettingsMenu/BoardSettingsMenu.vue";
 import styles from "./boardPanel.style";
 
 const props = defineProps({
-  name: {
-    type: String,
-    required: true,
-  },
   mode: {
     type: String as PropType<"topics" | "calendar">,
     required: true,
   },
 });
 
+const name = defineModel<string>("name");
+
 const emit = defineEmits<{
-  (e: "update:name", value: string): void;
   (e: "update:mode", value: "topics" | "calendar"): void;
 }>();
 
 const switchMode = () => {
   emit("update:mode", props.mode === "topics" ? "calendar" : "topics");
-};
-
-const onInput = (e: Event) => {
-  emit("update:name", (e.target as HTMLInputElement).value);
 };
 </script>
 
@@ -40,16 +34,9 @@ const onInput = (e: Event) => {
         <div :class="styles.breadcrumbs">
           <RouterLink to="/">Home</RouterLink>
           <Icon name="arrow_right" size="0.6rem" />
-          <span>{{ props.name }}</span>
+          <span>{{ name }}</span>
         </div>
-
-        <!-- TODO: заменить на кастомный input с debounce -->
-        <input
-          :class="styles.titleInput"
-          type="text"
-          :value="props.name"
-          @input="onInput"
-        />
+        <EditableTitle :class="styles.titleInput" v-model="name" />
       </div>
 
       <div :class="styles.controllers">

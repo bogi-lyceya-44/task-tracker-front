@@ -5,10 +5,11 @@ import { useDragState } from "../../composables/useDragState.ts";
 import useTopic from "../../composables/useTopic.ts";
 import type { TaskCardType, TopicColumnType } from "../../types.ts";
 import { request } from "../../utils/httpRequest.ts";
-import Icon from "../BaseIcon";
+import EditableTitle from "../EditableTitle/EditableTitle.vue";
 import TaskCard from "../TaskCard";
 
 import TaskCreationForm from "./TaskCreationForm/TaskCreationForm.vue";
+import TopicSettingsMenu from "./TopicSettingsMenu/TopicSettingsMenu.vue";
 import styles from "./topicColumn.style";
 import useTasksDragAndDrop from "./useTasksDragAndDrop.ts";
 
@@ -101,10 +102,8 @@ watch(
       @dragend.stop="(e) => emit('dragend', e)"
     >
       <div :class="styles.topicTop">
-        {{ topicName }}
-        <button :class="styles.moreButton">
-          <Icon name="more" size="1rem" />
-        </button>
+        <EditableTitle v-model="topicName" />
+        <TopicSettingsMenu :topicId="props.id" />
       </div>
       <div :class="styles.cardsWrapper">
         <TransitionGroup

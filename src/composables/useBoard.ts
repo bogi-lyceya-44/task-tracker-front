@@ -1,4 +1,5 @@
-import { onMounted, ref } from "vue";
+import throttle from "lodash/throttle";
+import { onMounted, ref, watch } from "vue";
 
 import type { TopicColumnType } from "../types.ts";
 import { request } from "../utils/httpRequest.ts";
@@ -25,6 +26,14 @@ const useBoard = (boardId: string) => {
         topics.value = res.topics;
       });
 
+  const updateBoard = async (id: string, topicIdsList: string[]) => {
+    return request("/update_boards", "POST", {
+      boardsToUpdate: [{ id: id, topicIds: topicIdsList }],
+    }).then(() => {
+      topicIds.value = topicIdsList;
+    });
+  };
+
   onMounted(async () => {
     await fetchBoard();
   });
@@ -33,16 +42,39 @@ const useBoard = (boardId: string) => {
     request("/create_topics", "POST", {
       topicsToCreate: [{ name: topicName }],
     })
-      .then((res) => {
-        return request("/update_boards", "POST", {
-          boardsToUpdate: [
-            { id: boardId, topicIds: [res.ids[0], ...topicIds.value] },
-          ],
-        });
-      })
+      .then((res) => updateBoard(boardId, [res.ids[0], ...topicIds.value]))
       .then(fetchBoard);
 
-  return { boardName, topics, fetchBoard, addTopic };
+  const deleteTopic = (topicId: string) =>
+    request("/delete_topics", "POST", { ids: [topicId] })
+      .then(() =>
+        updateBoard(
+          boardId,
+          topicIds.value.filter((i) => i !== topicId),
+        ),
+      )
+      .then(fetchBoard);
+
+  const throttledRenameRequest = throttle(
+    (name: string) => {
+      request("/update_boards", "POST", {
+        boardsToUpdate: [
+          {
+            id: boardId,
+            name,
+          },
+        ],
+      });
+    },
+    800,
+    { leading: false, trailing: true },
+  );
+
+  watch(boardName, (newValue) => {
+    if (newValue) throttledRenameRequest(newValue);
+  });
+
+  return { boardName, topics, fetchBoard, addTopic, deleteTopic };
 };
 
 export default useBoard;
