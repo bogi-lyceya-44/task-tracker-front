@@ -1,21 +1,3 @@
-<!--import { defineComponent, ref } from "vue";-->
-<!--import { useRoute, useRouter } from "vue-router";-->
-
-<!--import usePopupMenu from "../../composables/usePopupMenu.ts";-->
-<!--import { request } from "../../utils/httpRequest.ts";-->
-<!--import Icon from "../Icon";-->
-
-<!--import styles from "./boardSettingsMenu.style.ts";-->
-
-<!--const BoardSettingsMenu = defineComponent(() => {-->
-
-<!--  return () => (-->
-
-<!--  );-->
-<!--});-->
-
-<!--export default BoardSettingsMenu;-->
-
 <script setup lang="ts">
 import { ref } from "vue";
 import { useRoute, useRouter } from "vue-router";

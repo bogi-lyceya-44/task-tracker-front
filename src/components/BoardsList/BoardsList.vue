@@ -23,7 +23,7 @@ const onDragEndExtended = () => {
       boardId: board.id,
       place: index + 1,
     })),
-  }).then((res) => console.log(res));
+  });
 };
 
 onMounted(async () => {
@@ -58,7 +58,7 @@ const maxWidth = computed(() => {
         :key="board.id"
         :id="board.id"
         :name="board.name"
-        @dragstart="() => onDragStart(board)"
+        @dragstart="(e) => onDragStart(e, board)"
         @dragover="() => onDragOver(board, index)"
         @dragend="onDragEndExtended"
       />

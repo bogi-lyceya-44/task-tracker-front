@@ -59,9 +59,10 @@ export default {
     border: none;
     border-radius: 1em;
     background-color: var(--second-background-color);
-    color: var(--text-color);
+    color: var(--primary-color);
     cursor: pointer;
     font-size: 1em;
+    font-weight: 400;
     gap: 0.8em;
     transition: 0.3s;
 

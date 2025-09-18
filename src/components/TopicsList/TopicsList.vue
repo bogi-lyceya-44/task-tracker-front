@@ -16,6 +16,7 @@ const route = useRoute();
 const { onDragStart, onDragOver, onDragEnd } = useDragAndDropReorder(
   topics,
   "topic",
+  "top",
 );
 
 const onDragEndExtended = () => {
@@ -48,7 +49,7 @@ const onDragEndExtended = () => {
             :name="topic.name"
             :taskIds="topic.taskIds"
             :class="styles.topic"
-            @dragstart="() => onDragStart(topic)"
+            @dragstart="(e) => onDragStart(e, topic)"
             @dragover="() => onDragOver(topic, index)"
             @dragend="onDragEndExtended"
           />
