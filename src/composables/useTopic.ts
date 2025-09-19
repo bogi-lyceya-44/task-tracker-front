@@ -9,13 +9,35 @@ const useTopic = (name: string, taskIdsList: string[], topicId: string) => {
   const taskIds = ref<string[]>(taskIdsList);
   const tasks = ref<TaskCardType[]>([]);
 
-  onMounted(() => {
+  const getTasks = async () => {
+    const res = await request("/get_tasks", "POST", { ids: taskIds.value });
+    tasks.value = res.tasks;
+  };
+
+  onMounted(async () => {
     if (taskIds.value.length === 0) tasks.value = [];
     else {
-      request("/get_tasks", "POST", { ids: taskIdsList }).then((res) => {
-        tasks.value = res.tasks;
-      });
+      await getTasks();
     }
+  });
+
+  const throttledRenameRequest = throttle(
+    (name: string) => {
+      request("/update_topics", "POST", {
+        topicsToUpdate: [
+          {
+            id: topicId,
+            name,
+          },
+        ],
+      });
+    },
+    800,
+    { leading: false, trailing: true },
+  );
+
+  watch(topicName, (newValue) => {
+    throttledRenameRequest(newValue);
   });
 
   const addTask = (name: string) =>
@@ -43,32 +65,37 @@ const useTopic = (name: string, taskIdsList: string[], topicId: string) => {
 
         taskIds.value = [...taskIds.value, taskId];
       })
-      .then(() =>
-        request("/get_tasks", "POST", { ids: taskIds.value }).then((res) => {
-          tasks.value = res.tasks;
-        }),
-      );
+      .then(getTasks);
 
-  const throttledRenameRequest = throttle(
-    (name: string) => {
-      request("/update_topics", "POST", {
-        topicsToUpdate: [
-          {
-            id: topicId,
-            name,
-          },
-        ],
-      });
-    },
-    800,
-    { leading: false, trailing: true },
-  );
+  const deleteTask = async (deleteId: string) => {
+    const newTaskIds = taskIds.value.filter((id) => id !== deleteId);
+    await request("/update_topics", "POST", {
+      topicsToUpdate: [{ id: topicId, taskIds: newTaskIds }],
+    });
+    taskIds.value = newTaskIds;
 
-  watch(topicName, (newValue) => {
-    throttledRenameRequest(newValue);
-  });
+    await getTasks();
+  };
 
-  return { topicName, tasks, addTask };
+  const updateTask = async (
+    updateId: string,
+    name: string,
+    description: string,
+  ) => {
+    await request("/update_tasks", "POST", {
+      tasksToUpdate: [
+        {
+          id: updateId,
+          name,
+          description,
+        },
+      ],
+    });
+
+    await getTasks();
+  };
+
+  return { topicName, tasks, addTask, deleteTask, updateTask };
 };
 
 export default useTopic;

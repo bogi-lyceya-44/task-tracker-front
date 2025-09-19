@@ -24,7 +24,7 @@ provide<(name: string) => void>("deleteTopic", deleteTopic);
       v-model:name="boardName"
       v-model:mode="boardMode"
     />
-    <div v-if="boardMode === 'topics'">
+    <div class="topics-wrapper" v-if="boardMode === 'topics'">
       <TopicsList v-if="topics" v-model:topics="topics" />
       <TopicsListSkeleton v-else />
     </div>
@@ -33,6 +33,11 @@ provide<(name: string) => void>("deleteTopic", deleteTopic);
 
 <style scoped>
 .board-wrapper {
+  display: flex;
+  flex-direction: column;
+}
+.topics-wrapper {
+  flex: 1;
   display: flex;
   flex-direction: column;
 }

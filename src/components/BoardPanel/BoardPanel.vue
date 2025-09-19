@@ -4,7 +4,7 @@ import { RouterLink } from "vue-router";
 
 import avatarImage from "../../assets/images/avatar.jpg";
 import Icon from "../BaseIcon/BaseIcon.vue";
-import EditableTitle from "../EditableTitle/EditableTitle.vue";
+import EditableTitle from "../EditableText";
 
 import BoardSettingsMenu from "./BoardSettingsMenu/BoardSettingsMenu.vue";
 import styles from "./boardPanel.style";

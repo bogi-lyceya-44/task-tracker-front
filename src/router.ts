@@ -1,13 +1,9 @@
 import { createRouter, createWebHashHistory } from "vue-router";
 
-import BoardView from "./views/BoardView.vue";
-import HomeView from "./views/HomeView.vue";
-import ProfileView from "./views/ProfileView.vue";
-
 const routes = [
-  { path: "/", component: HomeView },
-  { path: "/board/:id", component: BoardView },
-  { path: "/profile", component: ProfileView },
+  { path: "/", component: () => import("./views/HomeView.vue") },
+  { path: "/board/:id", component: () => import("./views/BoardView.vue") },
+  { path: "/profile", component: () => import("./views/ProfileView.vue") },
 ];
 
 export const router = createRouter({

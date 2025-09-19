@@ -27,7 +27,7 @@
 
 :root[data-bs-theme="dark"] {
   --background-color: #1a1d1d;
-  --danger-background-color: rgba(244, 107, 80, 0.16);
+  --danger-background-color: #3e2a26;
   --second-background-color: #2b2e2e;
   --second-background-color-hover: rgb(54, 58, 56);
   --third-background-color: rgb(70, 76, 74);
@@ -43,7 +43,7 @@
 @media (prefers-color-scheme: dark) {
   :root[data-bs-theme="system"] {
     --background-color: #1a1d1d;
-    --danger-background-color: rgba(244, 107, 80, 0.16);
+    --danger-background-color: #3e2a26;
     --second-background-color: #2b2e2e;
     --second-background-color-hover: rgb(54, 58, 56);
     --text-color: #ffffff;

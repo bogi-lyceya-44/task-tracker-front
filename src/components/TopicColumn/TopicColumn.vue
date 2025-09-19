@@ -5,7 +5,7 @@ import { useDragState } from "../../composables/useDragState.ts";
 import useTopic from "../../composables/useTopic.ts";
 import type { TaskCardType, TopicColumnType } from "../../types.ts";
 import { request } from "../../utils/httpRequest.ts";
-import EditableTitle from "../EditableTitle/EditableTitle.vue";
+import EditableTitle from "../EditableText/EditableText.vue";
 import TaskCard from "../TaskCard";
 
 import TaskCreationForm from "./TaskCreationForm/TaskCreationForm.vue";
@@ -21,7 +21,7 @@ const emit = defineEmits(["dragstart", "dragover", "dragend"]);
 
 const needsSync = ref(false);
 
-const { topicName, tasks, addTask } = useTopic(
+const { topicName, tasks, addTask, deleteTask, updateTask } = useTopic(
   props.name,
   props.taskIds,
   props.id,
@@ -119,12 +119,16 @@ watch(
             @dragover.prevent.stop="() => cardDragOver(task, index)"
           >
             <TaskCard
-              :title="task.name"
-              :description="task.description"
+              v-model:title="task.name"
+              v-model:description="task.description"
               draggable="true"
               @dragstart.stop="() => onTaskDragStart(task)"
               @drop.prevent.stop="onDrop"
               @dragend="onDragEnd"
+              @delete="() => deleteTask(task.id)"
+              @update="
+                (name: string, desc: string) => updateTask(task.id, name, desc)
+              "
             />
           </div>
         </TransitionGroup>

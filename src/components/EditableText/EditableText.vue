@@ -4,7 +4,7 @@ import { ref } from "vue";
 import usePopupMenu from "../../composables/usePopupMenu.ts";
 import BaseIcon from "../BaseIcon/BaseIcon.vue";
 
-import styles from "./editableTitle.styles.ts";
+import styles from "./editableText.styles.ts";
 
 const title = defineModel<string>();
 
