@@ -2,7 +2,7 @@
 
 Frontend for a task tracker. Tasks, topics, boards - everything for Kanban.
 
-#### Stack:
+### Stack:
 
 - [TypeScript](https://github.com/microsoft/TypeScript)
 - [Vue.js](https://github.com/vuejs/core) + [Vue Router](https://github.com/vuejs/router)
