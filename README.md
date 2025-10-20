@@ -9,3 +9,9 @@ Frontend for a task tracker. Tasks, topics, boards - everything for Kanban.
 - [Linaria](https://github.com/callstack/linaria)
 
 The rules and style of development are described in [development guide](docs/DEVELOPMENT.md).
+
+### How to launch the application
+```
+npm i
+npm run dev
+```
